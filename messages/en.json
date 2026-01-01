@@ -90,5 +90,21 @@
       "error": "Verification failed!",
       "backToLogin": "Back to Login",
       "invalidToken": "Invalid Token"
+  },
+  "StationDetail": {
+    "address": "Address",
+    "openingHours": "Opening Hours",
+    "days": {
+        "sat": "Saturday",
+        "sun": "Sunday",
+        "monFri": "Mon-Fri"
+    },
+    "disclaimer": "* Opening hours may vary (Mock Data)",
+    "currentPrices": "Current Prices",
+    "priceSource": "MTS-K Price",
+    "startRoute": "Start Route",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites",
+    "loginToAdd": "Login to Add"
   }
 }

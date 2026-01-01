@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Navigation, Map, ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface NavigationDropdownProps {
   lat: number;
@@ -11,6 +12,7 @@ interface NavigationDropdownProps {
 export function NavigationDropdown({ lat, lng }: NavigationDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations('StationDetail');
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -29,7 +31,7 @@ export function NavigationDropdown({ lat, lng }: NavigationDropdownProps) {
         className="flex w-full items-center justify-center gap-2 rounded bg-[#0078BE] py-3 font-medium text-white transition-colors hover:bg-[#006098]"
       >
         <Navigation className="h-5 w-5" />
-        <span>Route starten</span>
+        <span>{t('startRoute')}</span>
         <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
 

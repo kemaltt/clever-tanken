@@ -90,5 +90,21 @@
       "error": "Fehler bei der Bestätigung!",
       "backToLogin": "Zurück zum Login",
       "invalidToken": "Ungültiger Token"
+  },
+  "StationDetail": {
+    "address": "Adresse",
+    "openingHours": "Öffnungszeiten",
+    "days": {
+        "sat": "Samstag",
+        "sun": "Sonntag",
+        "monFri": "Mo-Fr"
+    },
+    "disclaimer": "* Öffnungszeiten können abweichen (Mock Data)",
+    "currentPrices": "Aktuelle Preise",
+    "priceSource": "MTS-K Preis",
+    "startRoute": "Route starten",
+    "addToFavorites": "Zu Favoriten hinzufügen",
+    "removeFromFavorites": "Aus Favoriten entfernen",
+    "loginToAdd": "Einloggen um hinzuzufügen"
   }
 }

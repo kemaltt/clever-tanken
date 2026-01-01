@@ -90,5 +90,21 @@
       "error": "Doğrulama başarısız!",
       "backToLogin": "Girişe Dön",
       "invalidToken": "Geçersiz Token"
+  },
+  "StationDetail": {
+    "address": "Adres",
+    "openingHours": "Çalışma Saatleri",
+    "days": {
+        "sat": "Cumartesi",
+        "sun": "Pazar",
+        "monFri": "Pzt-Cum"
+    },
+    "disclaimer": "* Çalışma saatleri değişiklik gösterebilir (Test Verisi)",
+    "currentPrices": "Güncel Fiyatlar",
+    "priceSource": "MTS-K Fiyatı",
+    "startRoute": "Rota Oluştur",
+    "addToFavorites": "Favorilere Ekle",
+    "removeFromFavorites": "Favorilerden Çıkar",
+    "loginToAdd": "Eklemek için Giriş Yap"
   }
 }

@@ -1,6 +1,7 @@
 import { TankerKoenigStation } from "@/lib/tankerkoenig";
 import { Star, X, Navigation } from "lucide-react";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { StationMap } from "@/components/StationMap";
 import { NavigationDropdown } from "@/components/NavigationDropdown";
 import { FavoriteButtonFull } from "@/components/FavoriteButtonFull";
@@ -10,7 +11,8 @@ interface StationDetailProps {
   searchParams: { q?: string; type?: string; r?: string };
 }
 
-export function StationDetail({ station, searchParams }: StationDetailProps) {
+export async function StationDetail({ station, searchParams }: StationDetailProps) {
+  const t = await getTranslations('StationDetail');
   return (
     <div className="mx-auto max-w-4xl overflow-hidden rounded-xl bg-white shadow-2xl">
       {/* Header */}
@@ -29,7 +31,7 @@ export function StationDetail({ station, searchParams }: StationDetailProps) {
         {/* Info Column */}
         <div className="space-y-6">
           <div>
-            <h3 className="text-xl font-bold text-[#003050]">Adresse</h3>
+            <h3 className="text-xl font-bold text-[#003050]">{t('address')}</h3>
             <p className="text-lg text-gray-700">
               {station.street} {station.houseNumber}
             </p>
@@ -39,23 +41,23 @@ export function StationDetail({ station, searchParams }: StationDetailProps) {
           </div>
 
           <div>
-            <h3 className="mb-2 text-xl font-bold text-[#003050]">Öffnungszeiten</h3>
+            <h3 className="mb-2 text-xl font-bold text-[#003050]">{t('openingHours')}</h3>
             <div className="space-y-1 text-gray-700">
               <div className="flex justify-between">
-                <span>Samstag</span>
+                <span>{t('days.sat')}</span>
                 <span>0:00-24:00</span>
               </div>
               <div className="flex justify-between">
-                <span>Sonntag</span>
+                <span>{t('days.sun')}</span>
                 <span>0:00-24:00</span>
               </div>
               <div className="flex justify-between">
-                <span>Mo-Fr</span>
+                <span>{t('days.monFri')}</span>
                 <span>0:00-24:00</span>
               </div>
             </div>
             <p className="mt-2 text-xs text-gray-500">
-              * Öffnungszeiten können abweichen (Mock Data)
+              {t('disclaimer')}
             </p>
           </div>
 
@@ -72,12 +74,12 @@ export function StationDetail({ station, searchParams }: StationDetailProps) {
 
       {/* Prices Section */}
       <div className="bg-[#003050] p-6 text-white">
-        <h3 className="mb-6 text-xl font-bold">Aktuelle Preise</h3>
+        <h3 className="mb-6 text-xl font-bold">{t('currentPrices')}</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="flex items-center justify-between rounded-lg bg-white/10 p-4 backdrop-blur-sm">
             <div>
               <div className="text-lg font-bold">Diesel</div>
-              <div className="text-xs text-gray-300">MTS-K Preis</div>
+              <div className="text-xs text-gray-300">{t('priceSource')}</div>
             </div>
             <div className="text-3xl font-mono font-bold">{station.diesel?.toFixed(3) ?? "-.---"} €</div>
           </div>

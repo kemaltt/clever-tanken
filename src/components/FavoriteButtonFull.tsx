@@ -6,6 +6,7 @@ import { useSidebar } from "@/contexts/SidebarContext";
 import { useState, useEffect } from "react";
 import type { TankerKoenigStation } from "@/lib/tankerkoenig";
 import { toggleFavorite, isFavorite } from "@/actions/favorites";
+import { useTranslations } from "next-intl";
 
 interface FavoriteButtonFullProps {
   stationId: string;
@@ -17,6 +18,7 @@ export function FavoriteButtonFull({ stationId, station }: FavoriteButtonFullPro
   const { openSidebar } = useSidebar();
   const [favorite, setFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+  const t = useTranslations('StationDetail');
 
   useEffect(() => {
     if (session) {
@@ -52,10 +54,10 @@ export function FavoriteButtonFull({ stationId, station }: FavoriteButtonFullPro
       <Star className={`h-5 w-5 ${favorite ? "fill-current" : ""}`} />
       <span>
         {!session 
-          ? "Einloggen um hinzuzufügen" 
+          ? t('loginToAdd') 
           : favorite 
-            ? "Aus Favoriten entfernen" 
-            : "Zu Favoriten hinzufügen"
+            ? t('removeFromFavorites') 
+            : t('addToFavorites')
         }
       </span>
     </button>
