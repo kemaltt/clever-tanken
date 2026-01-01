@@ -62,26 +62,18 @@ export function Sidebar() {
       redirect: false,
     });
 
-    console.log("Login result:", result);
-
-    // Check for error first (NextAuth can return ok:true with error)
     if (result?.error) {
       console.log("Login failed, checking verification...");
-      // Check if it's a verification error using server action
       const { checkEmailVerification } = await import("@/actions/check-verification");
       const { verified, hasPassword } = await checkEmailVerification(email);
       
-      console.log("Verification check:", { verified, hasPassword });
       
       if (hasPassword && verified === false) {
-        console.log("Setting verificationError to true");
         setVerificationError(true);
       } else {
-        console.log("Setting invalid credentials error");
         setLoginError("E-Mail oder Passwort ist ungültig");
       }
     } else if (result?.ok) {
-      console.log("Login successful");
       closeSidebar();
       router.refresh();
     }

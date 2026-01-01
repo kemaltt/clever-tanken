@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { registerUser } from "@/actions/register";
+import { useSidebar } from "@/contexts/SidebarContext";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { openSidebar } = useSidebar();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -80,9 +81,15 @@ export default function RegisterPage() {
 
         <div className="mt-6 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
-          <Link href="/?login=true" className="font-medium text-primary hover:underline">
+          <button 
+            onClick={() => {
+              router.push("/");
+              setTimeout(() => openSidebar(), 100);
+            }}
+            className="font-medium text-primary hover:underline"
+          >
             Login
-          </Link>
+          </button>
         </div>
       </div>
     </div>

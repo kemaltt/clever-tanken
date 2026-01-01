@@ -82,7 +82,7 @@ export function StationList({ stations, searchParams }: StationListProps) {
 
           {/* Favorite Button */}
           <div className="flex items-center pr-4">
-            <FavoriteButton stationId={station.id} size="sm" />
+            <FavoriteButton stationId={station.id} station={station} size="sm" />
           </div>
         </div>
       ))}

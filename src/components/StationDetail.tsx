@@ -59,7 +59,7 @@ export function StationDetail({ station, searchParams }: StationDetailProps) {
             </p>
           </div>
 
-          <FavoriteButtonFull stationId={station.id} />
+          <FavoriteButtonFull stationId={station.id} station={station} />
 
           <NavigationDropdown lat={station.lat} lng={station.lng} />
         </div>
