@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { X, Menu, User, LogOut, Settings, Eye, EyeOff } from "lucide-react";
+// import Link from "next/link"; // Removed
+import { X, Menu, User, LogOut, Settings, Eye, EyeOff, Globe } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useSidebar } from "@/contexts/SidebarContext";
-
-import { useRouter } from "next/navigation";
-
+import { useRouter as useNextRouter } from "next/navigation";
+import { Link, useRouter, usePathname } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export function Sidebar() {
   const [email, setEmail] = useState("");
@@ -18,11 +18,16 @@ export function Sidebar() {
   const [resendSuccess, setResendSuccess] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  
+  const nextRouter = useNextRouter();
   const router = useRouter();
+  const pathname = usePathname();
   const { data: session } = useSession();
   const { openFavorites } = useFavorites();
   const { isSidebarOpen: isOpen, toggleSidebar, closeSidebar } = useSidebar();
-
+  
+  const t = useTranslations('Sidebar');
+  const tAuth = useTranslations('Auth');
 
   const handleResendVerification = async () => {
     const { resendVerification } = await import("@/actions/resend-verification");
@@ -40,10 +45,10 @@ export function Sidebar() {
     // Validation
     const newErrors: { email?: string; password?: string } = {};
     if (!email.trim()) {
-      newErrors.email = "Bitte geben Sie Ihre E-Mail-Adresse ein.";
+      newErrors.email = t('email') + " erforderlich"; // Fallback simple validation msg
     }
     if (!password.trim()) {
-      newErrors.password = "Bitte geben Sie Ihr Passwort ein.";
+      newErrors.password = t('password') + " erforderlich";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -71,17 +76,21 @@ export function Sidebar() {
       if (hasPassword && verified === false) {
         setVerificationError(true);
       } else {
-        setLoginError("E-Mail oder Passwort ist ungültig");
+        setLoginError(tAuth('loginError'));
       }
     } else if (result?.ok) {
       closeSidebar();
-      router.refresh();
+      nextRouter.refresh();
     }
   };
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
-    router.refresh();
+    nextRouter.refresh();
+  };
+
+  const changeLanguage = (locale: string) => {
+      router.replace(pathname, {locale});
   };
 
   return (
@@ -120,7 +129,7 @@ export function Sidebar() {
           {/* Navigation Links */}
           <nav className="flex flex-col gap-6 text-lg font-medium text-[#003050]">
             <Link href="/" onClick={toggleSidebar} className="text-[#0078BE]">
-              Home
+              {t('home')}
             </Link>
             <button 
               onClick={() => {
@@ -129,13 +138,13 @@ export function Sidebar() {
               }} 
               className="text-left hover:text-[#0078BE]"
             >
-              Favoriten
+              {t('favorites')}
             </button>
             <Link href="#" className="hover:text-[#0078BE]">
-              Statistiken
+              {t('statistics')}
             </Link>
             <Link href="#" className="hover:text-[#0078BE]">
-              clever-deal
+              {t('deals')}
             </Link>
           </nav>
 
@@ -161,7 +170,7 @@ export function Sidebar() {
                 
                 <button className="flex items-center gap-2 text-sm font-medium text-[#003050] hover:text-[#0078BE]">
                   <Settings className="h-4 w-4" />
-                  Account Einstellungen
+                  {t('account')}
                 </button>
                 
                 <button 
@@ -169,7 +178,7 @@ export function Sidebar() {
                   className="flex items-center gap-2 text-sm font-medium text-red-600 hover:text-red-700"
                 >
                   <LogOut className="h-4 w-4" />
-                  Abmelden
+                  {t('logout')}
                 </button>
               </div>
             ) : (
@@ -185,7 +194,7 @@ export function Sidebar() {
                   <div>
                     <input
                       type="email"
-                      placeholder="Benutzername (Email)"
+                      placeholder={t('email')}
                       className={`w-full rounded border p-2 text-sm focus:outline-none ${
                         errors.email ? "border-red-500 focus:border-red-500" : "border-gray-300 focus:border-[#0078BE]"
                       }`}
@@ -201,7 +210,7 @@ export function Sidebar() {
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
-                      placeholder="Passwort"
+                      placeholder={t('password')}
                       className={`w-full rounded border p-2 pr-10 text-sm focus:outline-none ${
                         errors.password ? "border-red-500 focus:border-red-500" : "border-gray-300 focus:border-[#0078BE]"
                       }`}
@@ -215,7 +224,7 @@ export function Sidebar() {
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                      aria-label={showPassword ? "Passwort verbergen" : "Passwort anzeigen"}
+                      aria-label="Toggle password visibility"
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
@@ -224,14 +233,14 @@ export function Sidebar() {
                   
                   <div className="flex items-center gap-2 text-sm text-[#003050]">
                     <input type="checkbox" id="keep-logged-in" className="rounded border-gray-300" />
-                    <label htmlFor="keep-logged-in">Angemeldet bleiben:</label>
+                    <label htmlFor="keep-logged-in">Angemeldet bleiben</label>
                   </div>
 
                   <button
                     type="submit"
                     className="mt-2 rounded bg-[#0078BE] py-2 font-bold text-white hover:bg-[#006098]"
                   >
-                    Login
+                    {t('login')}
                   </button>
                 </form>
 
@@ -243,31 +252,39 @@ export function Sidebar() {
 
                 {verificationError && (
                   <div className="mt-4 rounded-lg bg-yellow-50 p-3 text-sm">
-                    <p className="font-medium text-yellow-800">E-Mail nicht verifiziert</p>
-                    <p className="mt-1 text-yellow-700">Bitte überprüfen Sie Ihr Postfach und klicken Sie auf den Bestätigungslink.</p>
+                    <p className="font-medium text-yellow-800">{tAuth('verifyEmail')}</p>
                     <button
                       onClick={handleResendVerification}
                       className="mt-2 text-sm font-medium text-[#0078BE] hover:underline"
                     >
-                      Bestätigungs-E-Mail erneut senden
+                      {tAuth('resend')}
                     </button>
                   </div>
                 )}
 
                 {resendSuccess && (
                   <div className="mt-4 rounded-lg bg-green-50 p-3 text-sm text-green-600">
-                    Bestätigungs-E-Mail wurde erneut gesendet!
+                    {tAuth('sent')}
                   </div>
                 )}
 
                 <div className="mt-4 flex justify-between text-xs text-[#0078BE]">
                   <Link href="/register" onClick={toggleSidebar}>
-                    Jetzt registrieren
+                    {t('register')}
                   </Link>
                   <Link href="/forgot-password" onClick={toggleSidebar}>Passwort vergessen?</Link>
                 </div>
               </>
             )}
+
+            {/* Language Switcher */}
+            <div className="mt-6 flex justify-center gap-4 text-sm font-medium text-gray-500">
+                <button onClick={() => changeLanguage('de')} className="hover:text-[#0078BE]">DE</button>
+                <div className="border-r border-gray-300"></div>
+                <button onClick={() => changeLanguage('en')} className="hover:text-[#0078BE]">EN</button>
+                <div className="border-r border-gray-300"></div>
+                <button onClick={() => changeLanguage('tr')} className="hover:text-[#0078BE]">TR</button>
+            </div>
           </div>
         </div>
       </div>

@@ -2,8 +2,9 @@
 
 import { TankerKoenigStation } from "@/lib/tankerkoenig";
 import { MapPin, Navigation } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { FavoriteButton } from "./FavoriteButton";
+import { useTranslations } from "next-intl";
 
 interface StationListProps {
   stations: TankerKoenigStation[];
@@ -11,10 +12,12 @@ interface StationListProps {
 }
 
 export function StationList({ stations, searchParams }: StationListProps) {
+  const t = useTranslations('StationList');
+
   if (stations.length === 0) {
     return (
       <div className="py-10 text-center text-white">
-        <p className="text-xl">Keine Tankstellen gefunden.</p>
+        <p className="text-xl">{t('noStations')}</p>
       </div>
     );
   }
@@ -24,10 +27,10 @@ export function StationList({ stations, searchParams }: StationListProps) {
       {/* Results Header */}
       <div className="flex items-center justify-between rounded-lg bg-white/10 px-4 py-3 backdrop-blur-sm">
         <h2 className="text-lg font-semibold text-white">
-          {stations.length} {stations.length === 1 ? "Tankstelle" : "Tankstellen"} gefunden
+          {stations.length === 1 ? t('oneFound') : t('found', {count: stations.length})}
         </h2>
         <span className="text-sm text-white/70">
-          Sortiert nach Preis
+          {t('sortedByPrice')}
         </span>
       </div>
 
@@ -52,9 +55,9 @@ export function StationList({ stations, searchParams }: StationListProps) {
                 </span>
               </div>
               <div className="mt-1 text-xs text-gray-500">
-                geändert
+                {t('updated')}
                 <br />
-                vor kurzem
+                {t('ago')}
               </div>
             </div>
 
@@ -76,7 +79,7 @@ export function StationList({ stations, searchParams }: StationListProps) {
 
             {/* Distance Section */}
             <div className="flex w-24 flex-col items-center justify-center p-4 text-[#003050]">
-              <div className="text-xl font-bold">{station.dist.toFixed(1)} km</div>
+              <div className="text-xl font-bold">{station.dist.toFixed(1)} {t('distance')}</div>
             </div>
           </Link>
 

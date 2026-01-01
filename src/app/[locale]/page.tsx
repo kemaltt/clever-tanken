@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import { SearchForm } from "@/components/SearchForm";
 import Image from "next/image";
 import { Suspense } from "react";
@@ -12,6 +13,7 @@ export default async function Home({
 }: {
   searchParams: Promise<{ q?: string; type?: string; r?: string; id?: string }>;
 }) {
+  const t = await getTranslations('HomePage');
   const { q, type, r, id } = await searchParams;
   const fuelType = (type as "diesel" | "e5" | "e10") || "diesel";
   const radius = r ? parseInt(r) : 5;
@@ -47,10 +49,10 @@ export default async function Home({
       <div className={`relative flex flex-col items-center justify-center px-4 py-10 text-center transition-all duration-500 ${q ? 'min-h-[40vh]' : 'flex-1'}`}>
         <div className="relative z-10 w-full max-w-4xl">
           <h1 className="mb-2 text-3xl font-bold text-white sm:text-5xl">
-            Jetzt günstig tanken!
+            {t('title')}
           </h1>
           <h2 className="mb-10 text-xl font-medium text-gray-200 sm:text-2xl">
-            Tankstellen in Deiner Umgebung finden
+            {t('subtitle')}
           </h2>
           
           <div className="flex justify-center">
@@ -78,15 +80,15 @@ export default async function Home({
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 text-center py-12">
               <div className="p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
                 <div className="mb-4 text-3xl font-bold text-white">15k+</div>
-                <div className="text-gray-200">Tankstellen</div>
+                <div className="text-gray-200">{t('features.stations')}</div>
               </div>
               <div className="p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
                 <div className="mb-4 text-3xl font-bold text-white">Live</div>
-                <div className="text-gray-200">Preis-Updates</div>
+                <div className="text-gray-200">{t('features.live')}</div>
               </div>
               <div className="p-6 rounded-xl bg-white/10 backdrop-blur-md border border-white/20">
                 <div className="mb-4 text-3xl font-bold text-white">Gratis</div>
-                <div className="text-gray-200">Nutzung</div>
+                <div className="text-gray-200">{t('features.free')}</div>
               </div>
             </div>
           )}

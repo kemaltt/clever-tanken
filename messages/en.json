@@ -1,0 +1,46 @@
+{
+  "HomePage": {
+    "title": "Fuel up cheaper now!",
+    "subtitle": "Find gas stations in your area",
+    "searchPlaceholder": "Zip code and/or City",
+    "searchButton": "Search",
+    "favorites": "Favorites",
+    "login": "Login",
+    "register": "Register",
+    "features": {
+        "stations": "Gas Stations",
+        "live": "Price Updates",
+        "free": "Usage"
+    }
+  },
+  "StationList": {
+    "found": "{count} stations found",
+    "oneFound": "1 station found",
+    "noStations": "No gas stations found.",
+    "sortedByPrice": "Sorted by price",
+    "updated": "updated",
+    "ago": "just now",
+    "open": "Open",
+    "closed": "Closed",
+    "distance": "mi"
+  },
+  "Sidebar": {
+      "home": "Home",
+      "favorites": "Favorites",
+      "statistics": "Statistics",
+      "deals": "clever-deal",
+      "account": "Account Settings",
+      "logout": "Logout",
+      "login": "Login",
+      "email": "Email",
+      "password": "Password",
+      "noAccount": "No account yet?",
+      "register": "Register"
+  },
+  "Auth": {
+      "loginError": "Invalid email or password",
+      "verifyEmail": "Please verify your email address",
+      "resend": "Resend",
+      "sent": "Sent!"
+  }
+}

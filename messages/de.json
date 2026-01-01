@@ -1,0 +1,46 @@
+{
+  "HomePage": {
+    "title": "Jetzt günstig tanken!",
+    "subtitle": "Tankstellen in Deiner Umgebung finden",
+    "searchPlaceholder": "PLZ und/oder Ort",
+    "searchButton": "Suchen",
+    "favorites": "Favoriten",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "features": {
+        "stations": "Tankstellen",
+        "live": "Preis-Updates",
+        "free": "Nutzung"
+    }
+  },
+  "StationList": {
+    "found": "{count} Tankstellen gefunden",
+    "oneFound": "1 Tankstelle gefunden",
+    "noStations": "Keine Tankstellen gefunden.",
+    "sortedByPrice": "Sortiert nach Preis",
+    "updated": "aktualisiert",
+    "ago": "vor kurzem",
+    "open": "Geöffnet",
+    "closed": "Geschlossen",
+    "distance": "km"
+  },
+  "Sidebar": {
+      "home": "Home",
+      "favorites": "Favoriten",
+      "statistics": "Statistiken",
+      "deals": "clever-deal",
+      "account": "Account Einstellungen",
+      "logout": "Abmelden",
+      "login": "Anmelden",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "noAccount": "Noch keinen Account?",
+      "register": "Registrieren"
+  },
+  "Auth": {
+      "loginError": "E-Mail oder Passwort ist ungültig",
+      "verifyEmail": "Bitte bestätigen Sie Ihre E-Mail-Adresse",
+      "resend": "Erneut senden",
+      "sent": "Gesendet!"
+  }
+}

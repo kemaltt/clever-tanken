@@ -1,0 +1,46 @@
+{
+  "HomePage": {
+    "title": "Şimdi ucuza benzin al!",
+    "subtitle": "Bölgendeki benzin istasyonlarını bul",
+    "searchPlaceholder": "Posta kodu ve/veya Şehir",
+    "searchButton": "Ara",
+    "favorites": "Favoriler",
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "features": {
+        "stations": "İstasyon",
+        "live": "Fiyat Güncellemeleri",
+        "free": "Kullanım"
+    }
+  },
+  "StationList": {
+    "found": "{count} istasyon bulundu",
+    "oneFound": "1 istasyon bulundu",
+    "noStations": "Benzin istasyonu bulunamadı.",
+    "sortedByPrice": "Fiyata göre sıralandı",
+    "updated": "güncellendi",
+    "ago": "az önce",
+    "open": "Açık",
+    "closed": "Kapalı",
+    "distance": "km"
+  },
+  "Sidebar": {
+      "home": "Ana Sayfa",
+      "favorites": "Favoriler",
+      "statistics": "İstatistikler",
+      "deals": "Fırsatlar",
+      "account": "Hesap Ayarları",
+      "logout": "Çıkış Yap",
+      "login": "Giriş Yap",
+      "email": "E-posta",
+      "password": "Şifre",
+      "noAccount": "Hesabın yok mu?",
+      "register": "Kayıt Ol"
+  },
+  "Auth": {
+      "loginError": "Geçersiz e-posta veya şifre",
+      "verifyEmail": "Lütfen e-posta adresinizi doğrulayın",
+      "resend": "Tekrar gönder",
+      "sent": "Gönderildi!"
+  }
+}

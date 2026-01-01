@@ -2,13 +2,16 @@
 
 import { Search, MapPin, Star, ChevronDown, X } from "lucide-react";
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
+import { useSearchParams } from "next/navigation";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { useTranslations } from "next-intl";
 
 export function SearchForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { openFavorites } = useFavorites();
+  const t = useTranslations('HomePage');
   
   const [query, setQuery] = useState(searchParams.get("q") || "");
   const [fuelType, setFuelType] = useState(searchParams.get("type") || "diesel");
@@ -31,7 +34,7 @@ export function SearchForm() {
           </div>
           <input
             type="text"
-            placeholder="PLZ und/oder Ort"
+            placeholder={t('searchPlaceholder')}
             className="h-full flex-1 text-lg text-gray-900 placeholder:text-gray-400 focus:outline-none"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -111,7 +114,7 @@ export function SearchForm() {
             className="flex h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-[#0078BE] px-6 font-medium text-white transition-colors hover:bg-[#006098] sm:flex-none"
           >
             <Star className="h-5 w-5" />
-            <span>Favoriten</span>
+            <span>{t('favorites')}</span>
           </button>
         </div>
       </form>
