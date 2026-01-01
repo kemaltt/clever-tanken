@@ -3,6 +3,7 @@
 import { useState } from "react";
 // import Link from "next/link"; // Removed
 import { X, Menu, User, LogOut, Settings, Eye, EyeOff, Globe, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -16,7 +17,8 @@ export function Sidebar() {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const [verificationError, setVerificationError] = useState(false);
   const [resendSuccess, setResendSuccess] = useState(false);
-  const [loginError, setLoginError] = useState("");
+  // State for messages replaced by toast
+  // const [loginError, setLoginError] = useState(""); 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   
@@ -36,6 +38,7 @@ export function Sidebar() {
     
     if (result.success) {
       setResendSuccess(true);
+      toast.success(tAuth('sent'));
       setTimeout(() => setResendSuccess(false), 5000);
     }
   };
@@ -60,7 +63,7 @@ export function Sidebar() {
     setErrors({});
     setVerificationError(false);
     setResendSuccess(false);
-    setLoginError("");
+    // setLoginError("");
     setLoading(true);
 
     const result = await signIn("credentials", {
@@ -78,7 +81,8 @@ export function Sidebar() {
       if (hasPassword && verified === false) {
         setVerificationError(true);
       } else {
-        setLoginError(tAuth('loginError'));
+        // setLoginError(tAuth('loginError'));
+        toast.error(tAuth('loginError'));
       }
     } else if (result?.ok) {
       closeSidebar();
@@ -254,11 +258,7 @@ export function Sidebar() {
                   </button>
                 </form>
 
-                {loginError && (
-                  <div className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-600">
-                    {loginError}
-                  </div>
-                )}
+                {/* Login error shown via toast */}
 
                 {verificationError && (
                   <div className="mt-4 rounded-lg bg-yellow-50 p-3 text-sm">

@@ -57,7 +57,9 @@
     "addFavorites": "Fügen Sie Tankstellen zu Ihren Favoriten hinzu",
     "remove": "Aus Favoriten entfernen",
     "open": "Geöffnet",
-    "closed": "Geschlossen"
+    "closed": "Geschlossen",
+    "added": "Zu Favoriten hinzugefügt",
+    "removed": "Aus Favoriten entfernt"
   },
   "Register": {
     "title": "Account erstellen",
@@ -109,6 +111,8 @@
     "startRoute": "Route starten",
     "addToFavorites": "Zu Favoriten hinzufügen",
     "removeFromFavorites": "Aus Favoriten entfernen",
-    "loginToAdd": "Einloggen um hinzuzufügen"
+    "loginToAdd": "Einloggen um hinzuzufügen",
+    "added": "Zu Favoriten hinzugefügt",
+    "removed": "Aus Favoriten entfernt"
   }
 }

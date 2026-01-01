@@ -57,7 +57,9 @@
     "addFavorites": "Add gas stations to your favorites",
     "remove": "Remove from favorites",
     "open": "Open",
-    "closed": "Closed"
+    "closed": "Closed",
+    "added": "Added to favorites",
+    "removed": "Removed from favorites"
   },
   "Register": {
     "title": "Create Account",
@@ -109,6 +111,8 @@
     "startRoute": "Start Route",
     "addToFavorites": "Add to Favorites",
     "removeFromFavorites": "Remove from Favorites",
-    "loginToAdd": "Login to Add"
+    "loginToAdd": "Login to Add",
+    "added": "Added to favorites",
+    "removed": "Removed from favorites"
   }
 }

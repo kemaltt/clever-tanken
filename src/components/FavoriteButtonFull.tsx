@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import type { TankerKoenigStation } from "@/lib/tankerkoenig";
 import { toggleFavorite, isFavorite } from "@/actions/favorites";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 interface FavoriteButtonFullProps {
   stationId: string;
@@ -37,6 +38,11 @@ export function FavoriteButtonFull({ stationId, station }: FavoriteButtonFullPro
     
     if (result.success) {
       setFavorite(result.isFavorite ?? false);
+      if (result.isFavorite) {
+        toast.success(t('added') || "Favorilere eklendi");
+      } else {
+        toast.success(t('removed') || "Favorilerden çıkarıldı");
+      }
     }
     setLoading(false);
   };

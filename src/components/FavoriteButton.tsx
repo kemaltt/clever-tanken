@@ -6,6 +6,8 @@ import { useSidebar } from "@/contexts/SidebarContext";
 import { useState, useEffect } from "react";
 import { toggleFavorite, isFavorite } from "@/actions/favorites";
 import type { TankerKoenigStation } from "@/lib/tankerkoenig";
+import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface FavoriteButtonProps {
   stationId: string;
@@ -19,6 +21,7 @@ export function FavoriteButton({ stationId, station, size = "md", className = ""
   const { openSidebar } = useSidebar();
   const [favorite, setFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+  const t = useTranslations('StationDetail');
 
   useEffect(() => {
     if (session) {
@@ -41,6 +44,11 @@ export function FavoriteButton({ stationId, station, size = "md", className = ""
     
     if (result.success) {
       setFavorite(result.isFavorite ?? false);
+      if (result.isFavorite) {
+        toast.success(t('added'));
+      } else {
+        toast.success(t('removed'));
+      }
     }
     setLoading(false);
   };
@@ -57,7 +65,7 @@ export function FavoriteButton({ stationId, station, size = "md", className = ""
           ? "bg-yellow-400 text-white hover:bg-yellow-500" 
           : "bg-[#4FA6E0] text-white hover:bg-[#0078BE]"
       } transition-colors ${buttonPadding} ${className} ${loading ? "opacity-50" : ""}`}
-      title={session ? (favorite ? "Aus Favoriten entfernen" : "Zu Favoriten hinzufügen") : "Zum Hinzufügen bitte einloggen"}
+      title={session ? (favorite ? t('removeFromFavorites') : t('addToFavorites')) : t('loginToAdd')}
     >
       <Star className={`${iconSize} ${favorite ? "fill-current" : ""}`} />
     </button>

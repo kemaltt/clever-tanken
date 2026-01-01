@@ -9,6 +9,7 @@ import { SidebarProvider } from "@/contexts/SidebarContext";
 import { SessionProvider } from "@/components/SessionProvider";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { Toaster } from 'sonner';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 
@@ -39,6 +40,7 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen bg-[#F5F7F9]`} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
+          <Toaster position="top-center" richColors />
           <SessionProvider>
             <SidebarProvider>
               <FavoritesProvider>

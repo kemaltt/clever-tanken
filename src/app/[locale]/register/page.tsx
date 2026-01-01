@@ -6,19 +6,16 @@ import { useRouter } from "next/navigation";
 import { registerUser } from "@/actions/register";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const router = useRouter();
   const { openSidebar } = useSidebar();
   const t = useTranslations('Register');
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
     
     setLoading(true);
     
@@ -28,9 +25,10 @@ export default function RegisterPage() {
     setLoading(false);
 
       if (result.success) {
-        setSuccess(t('success'));
+        toast.success(t('success'));
+        e.currentTarget.reset(); // Formu temizle
       } else {
-        setError(result.error || t('failed'));
+        toast.error(result.error || t('failed'));
       }
   };
 
@@ -76,18 +74,6 @@ export default function RegisterPage() {
             {loading ? t('loading') : t('submit')}
           </button>
         </form>
-
-        {error && (
-          <div className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-600">
-            {error}
-          </div>
-        )}
-
-        {success && (
-          <div className="mt-3 rounded-lg bg-green-50 p-3 text-sm text-green-600">
-            {success}
-          </div>
-        )}
 
         <div className="mt-6 text-center text-sm text-muted-foreground">
           {t('alreadyAccount')}{" "}

@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { getFavorites, toggleFavorite } from "@/actions/favorites";
 import { Link, useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export function FavoritesPanel() {
   const { isFavoritesOpen, closeFavorites, inputRef } = useFavorites();
@@ -41,6 +42,7 @@ export function FavoritesPanel() {
     setFavorites(prev => prev.filter(f => f.stationId !== stationId));
     
     await toggleFavorite(stationId);
+    toast.success(t('removed'));
   };
 
   const filteredFavorites = favorites.filter(fav => {
