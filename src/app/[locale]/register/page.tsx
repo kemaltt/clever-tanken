@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/actions/register";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -12,14 +13,19 @@ export default function RegisterPage() {
   const t = useTranslations('Register');
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setSuccess("");
     
+    setLoading(true);
+    
     const formData = new FormData(e.currentTarget);
     const result = await registerUser(formData);
+    
+    setLoading(false);
 
       if (result.success) {
         setSuccess(t('success'));
@@ -63,9 +69,11 @@ export default function RegisterPage() {
           </div>
           <button
             type="submit"
-            className="w-full rounded-lg bg-primary py-2 font-medium text-primary-foreground hover:bg-primary/90"
+            disabled={loading}
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-2 font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
           >
-            {t('submit')}
+            {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+            {loading ? t('loading') : t('submit')}
           </button>
         </form>
 

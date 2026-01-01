@@ -35,7 +35,10 @@
       "email": "E-posta",
       "password": "Şifre",
       "noAccount": "Hesabın yok mu?",
-      "register": "Kayıt Ol"
+      "register": "Kayıt Ol",
+      "loggingIn": "Giriş yapılıyor...",
+      "keepLoggedIn": "Beni hatırla",
+      "forgotPassword": "Şifremi unuttum?"
   },
   "Auth": {
       "loginError": "Geçersiz e-posta veya şifre",
@@ -65,7 +68,8 @@
     "alreadyAccount": "Zaten hesabınız var mı?",
     "login": "Giriş Yap",
     "success": "Doğrulama e-postası gönderildi! Lütfen gelen kutunuzu kontrol edin.",
-    "failed": "Kayıt başarısız"
+    "failed": "Kayıt başarısız",
+    "loading": "Kayıt olunuyor..."
   },
   "ForgotPassword": {
       "title": "Şifremi Unuttum",

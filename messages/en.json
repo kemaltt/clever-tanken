@@ -35,7 +35,10 @@
       "email": "Email",
       "password": "Password",
       "noAccount": "No account yet?",
-      "register": "Register"
+      "register": "Register",
+      "loggingIn": "Logging in...",
+      "keepLoggedIn": "Keep me logged in",
+      "forgotPassword": "Forgot Password?"
   },
   "Auth": {
       "loginError": "Invalid email or password",
@@ -65,7 +68,8 @@
     "alreadyAccount": "Already have an account?",
     "login": "Login",
     "success": "Confirmation email sent! Please check your inbox.",
-    "failed": "Registration failed"
+    "failed": "Registration failed",
+    "loading": "Registering..."
   },
   "ForgotPassword": {
       "title": "Forgot Password?",

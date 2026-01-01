@@ -35,7 +35,10 @@
       "email": "E-Mail",
       "password": "Passwort",
       "noAccount": "Noch keinen Account?",
-      "register": "Registrieren"
+      "register": "Registrieren",
+      "loggingIn": "Anmelden...",
+      "keepLoggedIn": "Angemeldet bleiben",
+      "forgotPassword": "Passwort vergessen?"
   },
   "Auth": {
       "loginError": "E-Mail oder Passwort ist ungültig",
@@ -65,7 +68,8 @@
     "alreadyAccount": "Bereits einen Account?",
     "login": "Anmelden",
     "success": "Bestätigungs-E-Mail gesendet! Bitte überprüfen Sie Ihr Postfach.",
-    "failed": "Registrierung fehlgeschlagen"
+    "failed": "Registrierung fehlgeschlagen",
+    "loading": "Wird registriert..."
   },
   "ForgotPassword": {
       "title": "Passwort vergessen?",

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 // import Link from "next/link"; // Removed
-import { X, Menu, User, LogOut, Settings, Eye, EyeOff, Globe } from "lucide-react";
+import { X, Menu, User, LogOut, Settings, Eye, EyeOff, Globe, Loader2 } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useSidebar } from "@/contexts/SidebarContext";
@@ -18,6 +18,7 @@ export function Sidebar() {
   const [resendSuccess, setResendSuccess] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   const nextRouter = useNextRouter();
   const router = useRouter();
@@ -60,6 +61,7 @@ export function Sidebar() {
     setVerificationError(false);
     setResendSuccess(false);
     setLoginError("");
+    setLoading(true);
 
     const result = await signIn("credentials", {
       email,
@@ -81,6 +83,12 @@ export function Sidebar() {
     } else if (result?.ok) {
       closeSidebar();
       nextRouter.refresh();
+      setLoading(false);
+    }
+    
+    // If we are here and not redirected/ok, stop loading if error
+    if (result?.error) {
+        setLoading(false);
     }
   };
 
@@ -233,14 +241,16 @@ export function Sidebar() {
                   
                   <div className="flex items-center gap-2 text-sm text-[#003050]">
                     <input type="checkbox" id="keep-logged-in" className="rounded border-gray-300" />
-                    <label htmlFor="keep-logged-in">Angemeldet bleiben</label>
+                    <label htmlFor="keep-logged-in">{t('keepLoggedIn')}</label>
                   </div>
 
                   <button
                     type="submit"
-                    className="mt-2 rounded bg-[#0078BE] py-2 font-bold text-white hover:bg-[#006098]"
+                    disabled={loading}
+                    className="mt-2 flex items-center justify-center gap-2 rounded bg-[#0078BE] py-2 font-bold text-white hover:bg-[#006098] disabled:opacity-50"
                   >
-                    {t('login')}
+                    {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+                    {loading ? t('loggingIn') : t('login')}
                   </button>
                 </form>
 
@@ -272,7 +282,7 @@ export function Sidebar() {
                   <Link href="/register" onClick={toggleSidebar}>
                     {t('register')}
                   </Link>
-                  <Link href="/forgot-password" onClick={toggleSidebar}>Passwort vergessen?</Link>
+                  <Link href="/forgot-password" onClick={toggleSidebar}>{t('forgotPassword')}</Link>
                 </div>
               </>
             )}
