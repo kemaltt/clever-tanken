@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { registerUser } from "@/actions/register";
 import { useSidebar } from "@/contexts/SidebarContext";
+import { useTranslations } from "next-intl";
 
 export default function RegisterPage() {
   const router = useRouter();
   const { openSidebar } = useSidebar();
+  const t = useTranslations('Register');
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -20,20 +22,20 @@ export default function RegisterPage() {
     const result = await registerUser(formData);
 
       if (result.success) {
-        setSuccess("Bestätigungs-E-Mail gesendet! Bitte überprüfen Sie Ihr Postfach.");
+        setSuccess(t('success'));
       } else {
-        setError(result.error || "Registration failed");
+        setError(result.error || t('failed'));
       }
   };
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4">
       <div className="w-full max-w-md rounded-xl bg-card p-8 shadow-lg ring-1 ring-border">
-        <h1 className="mb-6 text-center text-2xl font-bold">Create Account</h1>
+        <h1 className="mb-6 text-center text-2xl font-bold">{t('title')}</h1>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="mb-1 block text-sm font-medium">Name</label>
+            <label className="mb-1 block text-sm font-medium">{t('name')}</label>
             <input
               name="name"
               type="text"
@@ -42,7 +44,7 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium">Email</label>
+            <label className="mb-1 block text-sm font-medium">{t('email')}</label>
             <input
               name="email"
               type="email"
@@ -51,7 +53,7 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium">Password</label>
+            <label className="mb-1 block text-sm font-medium">{t('password')}</label>
             <input
               name="password"
               type="password"
@@ -63,7 +65,7 @@ export default function RegisterPage() {
             type="submit"
             className="w-full rounded-lg bg-primary py-2 font-medium text-primary-foreground hover:bg-primary/90"
           >
-            Register
+            {t('submit')}
           </button>
         </form>
 
@@ -80,7 +82,7 @@ export default function RegisterPage() {
         )}
 
         <div className="mt-6 text-center text-sm text-muted-foreground">
-          Already have an account?{" "}
+          {t('alreadyAccount')}{" "}
           <button 
             onClick={() => {
               router.push("/");
@@ -88,7 +90,7 @@ export default function RegisterPage() {
             }}
             className="font-medium text-primary hover:underline"
           >
-            Login
+            {t('login')}
           </button>
         </div>
       </div>

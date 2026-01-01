@@ -42,5 +42,53 @@
       "verifyEmail": "Lütfen e-posta adresinizi doğrulayın",
       "resend": "Tekrar gönder",
       "sent": "Gönderildi!"
+  },
+  "FavoritesPanel": {
+    "title": "Favoriler",
+    "loginRequired": "Lütfen giriş yapın",
+    "loginDescription": "Favorilerinizi yönetmek için giriş yapın.",
+    "loginButton": "Giriş Yap",
+    "searchPlaceholder": "Favorilerde ara...",
+    "noFavorites": "Favori bulunamadı",
+    "tryDifferent": "Farklı bir arama terimi deneyin",
+    "addFavorites": "Favorilerinize benzin istasyonu ekleyin",
+    "remove": "Favorilerden çıkar",
+    "open": "Açık",
+    "closed": "Kapalı"
+  },
+  "Register": {
+    "title": "Hesap Oluştur",
+    "name": "İsim",
+    "email": "E-posta",
+    "password": "Şifre",
+    "submit": "Kayıt Ol",
+    "alreadyAccount": "Zaten hesabınız var mı?",
+    "login": "Giriş Yap",
+    "success": "Doğrulama e-postası gönderildi! Lütfen gelen kutunuzu kontrol edin.",
+    "failed": "Kayıt başarısız"
+  },
+  "ForgotPassword": {
+      "title": "Şifremi Unuttum",
+      "emailRequired": "Lütfen e-posta adresinizi girin.",
+      "success": "Şifre sıfırlama bağlantısı gönderildi.",
+      "error": "Bir şeyler ters gitti.",
+      "emailLabel": "E-posta",
+      "submit": "Sıfırlama Bağlantısı Gönder"
+  },
+  "ResetPassword": {
+      "title": "Yeni Şifre Belirle",
+      "passwordRequired": "Lütfen yeni bir şifre girin.",
+      "success": "Şifre başarıyla güncellendi!",
+      "error": "Bir şeyler ters gitti.",
+      "passwordLabel": "Yeni Şifre",
+      "submit": "Şifreyi Değiştir"
+  },
+  "NewVerification": {
+      "title": "E-posta Doğrulama",
+      "loading": "Doğrulanıyor...",
+      "success": "E-posta başarıyla doğrulandı!",
+      "error": "Doğrulama başarısız!",
+      "backToLogin": "Girişe Dön",
+      "invalidToken": "Geçersiz Token"
   }
 }

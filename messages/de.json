@@ -42,5 +42,53 @@
       "verifyEmail": "Bitte bestätigen Sie Ihre E-Mail-Adresse",
       "resend": "Erneut senden",
       "sent": "Gesendet!"
+  },
+  "FavoritesPanel": {
+    "title": "Favoriten",
+    "loginRequired": "Bitte einloggen",
+    "loginDescription": "Loggen Sie sich ein, um Ihre Favoriten zu verwalten.",
+    "loginButton": "Zum Login",
+    "searchPlaceholder": "Favoriten suchen...",
+    "noFavorites": "Keine Favoriten gefunden",
+    "tryDifferent": "Versuchen Sie einen anderen Suchbegriff",
+    "addFavorites": "Fügen Sie Tankstellen zu Ihren Favoriten hinzu",
+    "remove": "Aus Favoriten entfernen",
+    "open": "Geöffnet",
+    "closed": "Geschlossen"
+  },
+  "Register": {
+    "title": "Account erstellen",
+    "name": "Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "submit": "Registrieren",
+    "alreadyAccount": "Bereits einen Account?",
+    "login": "Anmelden",
+    "success": "Bestätigungs-E-Mail gesendet! Bitte überprüfen Sie Ihr Postfach.",
+    "failed": "Registrierung fehlgeschlagen"
+  },
+  "ForgotPassword": {
+      "title": "Passwort vergessen?",
+      "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+      "success": "E-Mail zum Zurücksetzen des Passworts wurde gesendet.",
+      "error": "Etwas ist schief gelaufen.",
+      "emailLabel": "E-Mail",
+      "submit": "Link zum Zurücksetzen senden"
+  },
+  "ResetPassword": {
+      "title": "Neues Passwort setzen",
+      "passwordRequired": "Bitte geben Sie ein neues Passwort ein.",
+      "success": "Passwort erfolgreich aktualisiert!",
+      "error": "Etwas ist schief gelaufen.",
+      "passwordLabel": "Neues Passwort",
+      "submit": "Passwort ändern"
+  },
+  "NewVerification": {
+      "title": "E-Mail Bestätigung",
+      "loading": "Bestätigung läuft...",
+      "success": "E-Mail erfolgreich bestätigt!",
+      "error": "Fehler bei der Bestätigung!",
+      "backToLogin": "Zurück zum Login",
+      "invalidToken": "Ungültiger Token"
   }
 }

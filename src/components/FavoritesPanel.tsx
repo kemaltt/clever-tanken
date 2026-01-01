@@ -6,14 +6,15 @@ import { useSession } from "next-auth/react";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { useState, useEffect } from "react";
 import { getFavorites, toggleFavorite } from "@/actions/favorites";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link, useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export function FavoritesPanel() {
   const { isFavoritesOpen, closeFavorites, inputRef } = useFavorites();
   const { data: session } = useSession();
   const { openSidebar } = useSidebar();
   const router = useRouter();
+  const t = useTranslations('FavoritesPanel');
   
   const [favorites, setFavorites] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -79,7 +80,7 @@ export function FavoritesPanel() {
           <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Star className="h-6 w-6 text-[#0078BE]" />
-              <h2 className="text-xl font-bold text-[#003050]">Favoriten</h2>
+              <h2 className="text-xl font-bold text-[#003050]">{t('title')}</h2>
             </div>
             <button
               onClick={closeFavorites}
@@ -94,15 +95,15 @@ export function FavoritesPanel() {
               <div className="mb-4 rounded-full bg-[#0078BE]/10 p-4">
                 <Star className="h-8 w-8 text-[#0078BE]" />
               </div>
-              <h3 className="mb-2 text-lg font-medium text-gray-900">Bitte einloggen</h3>
+              <h3 className="mb-2 text-lg font-medium text-gray-900">{t('loginRequired')}</h3>
               <p className="mb-6 text-sm text-gray-500">
-                Loggen Sie sich ein, um Ihre Favoriten zu verwalten.
+                {t('loginDescription')}
               </p>
               <button
                 onClick={handleLoginClick}
                 className="rounded-lg bg-[#0078BE] px-6 py-2 text-sm font-medium text-white transition-colors hover:bg-[#006098]"
               >
-                Zum Login
+                {t('loginButton')}
               </button>
             </div>
           ) : (
@@ -115,7 +116,7 @@ export function FavoritesPanel() {
                 <input
                   ref={inputRef}
                   type="text"
-                  placeholder="Favoriten suchen..."
+                  placeholder={t('searchPlaceholder')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-10 pr-4 text-sm focus:border-[#0078BE] focus:outline-none focus:ring-2 focus:ring-[#0078BE]/20"
@@ -133,11 +134,11 @@ export function FavoritesPanel() {
                 ) : filteredFavorites.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-12 text-center text-gray-500">
                     <Star className="mb-4 h-12 w-12 text-gray-300" />
-                    <p className="text-sm">Keine Favoriten gefunden</p>
+                    <p className="text-sm">{t('noFavorites')}</p>
                     {searchTerm ? (
-                      <p className="mt-1 text-xs">Versuchen Sie einen anderen Suchbegriff</p>
+                      <p className="mt-1 text-xs">{t('tryDifferent')}</p>
                     ) : (
-                      <p className="mt-1 text-xs">Fügen Sie Tankstellen zu Ihren Favoriten hinzu</p>
+                      <p className="mt-1 text-xs">{t('addFavorites')}</p>
                     )}
                   </div>
                 ) : (
@@ -156,7 +157,7 @@ export function FavoritesPanel() {
                           <button
                             onClick={(e) => handleRemoveFavorite(fav.stationId, e)}
                             className="ml-2 text-gray-400 hover:text-red-500"
-                            title="Aus Favoriten entfernen"
+                            title={t('remove')}
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -171,7 +172,7 @@ export function FavoritesPanel() {
 
                         <div className={`mt-2 flex items-center gap-2 text-xs font-medium ${fav.station.isOpen ? "text-green-600" : "text-red-600"}`}>
                           <div className={`h-2 w-2 rounded-full ${fav.station.isOpen ? "bg-green-500" : "bg-red-500"}`} />
-                          {fav.station.isOpen ? "Geöffnet" : "Geschlossen"}
+                          {fav.station.isOpen ? t('open') : t('closed')}
                         </div>
                       </Link>
                     ))}

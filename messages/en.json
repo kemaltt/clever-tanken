@@ -42,5 +42,53 @@
       "verifyEmail": "Please verify your email address",
       "resend": "Resend",
       "sent": "Sent!"
+  },
+  "FavoritesPanel": {
+    "title": "Favorites",
+    "loginRequired": "Please login",
+    "loginDescription": "Log in to manage your favorites.",
+    "loginButton": "Go to Login",
+    "searchPlaceholder": "Search favorites...",
+    "noFavorites": "No favorites found",
+    "tryDifferent": "Try a different search term",
+    "addFavorites": "Add gas stations to your favorites",
+    "remove": "Remove from favorites",
+    "open": "Open",
+    "closed": "Closed"
+  },
+  "Register": {
+    "title": "Create Account",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Register",
+    "alreadyAccount": "Already have an account?",
+    "login": "Login",
+    "success": "Confirmation email sent! Please check your inbox.",
+    "failed": "Registration failed"
+  },
+  "ForgotPassword": {
+      "title": "Forgot Password?",
+      "emailRequired": "Please enter your email address.",
+      "success": "Password reset email has been sent.",
+      "error": "Something went wrong.",
+      "emailLabel": "Email",
+      "submit": "Send Reset Link"
+  },
+  "ResetPassword": {
+      "title": "Set New Password",
+      "passwordRequired": "Please enter a new password.",
+      "success": "Password successfully updated!",
+      "error": "Something went wrong.",
+      "passwordLabel": "New Password",
+      "submit": "Change Password"
+  },
+  "NewVerification": {
+      "title": "Email Verification",
+      "loading": "Verifying...",
+      "success": "Email successfully verified!",
+      "error": "Verification failed!",
+      "backToLogin": "Back to Login",
+      "invalidToken": "Invalid Token"
   }
 }
