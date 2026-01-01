@@ -98,6 +98,7 @@ export function Sidebar() {
 
   const handleLogout = async () => {
     await signOut({ redirect: false });
+    toast.success(tAuth('logoutSuccess'));
     nextRouter.refresh();
   };
 

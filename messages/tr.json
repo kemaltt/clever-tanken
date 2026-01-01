@@ -44,7 +44,8 @@
       "loginError": "Geçersiz e-posta veya şifre",
       "verifyEmail": "Lütfen e-posta adresinizi doğrulayın",
       "resend": "Tekrar gönder",
-      "sent": "Gönderildi!"
+      "sent": "Gönderildi!",
+      "logoutSuccess": "Başarıyla çıkış yapıldı"
   },
   "FavoritesPanel": {
     "title": "Favoriler",

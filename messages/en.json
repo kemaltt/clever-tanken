@@ -44,7 +44,8 @@
       "loginError": "Invalid email or password",
       "verifyEmail": "Please verify your email address",
       "resend": "Resend",
-      "sent": "Sent!"
+      "sent": "Sent!",
+      "logoutSuccess": "Logged out successfully"
   },
   "FavoritesPanel": {
     "title": "Favorites",

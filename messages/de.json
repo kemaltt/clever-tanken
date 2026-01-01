@@ -44,7 +44,8 @@
       "loginError": "E-Mail oder Passwort ist ungültig",
       "verifyEmail": "Bitte bestätigen Sie Ihre E-Mail-Adresse",
       "resend": "Erneut senden",
-      "sent": "Gesendet!"
+      "sent": "Gesendet!",
+      "logoutSuccess": "Erfolgreich abgemeldet"
   },
   "FavoritesPanel": {
     "title": "Favoriten",
