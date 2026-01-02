@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { registerUser } from "@/actions/register";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { useTranslations } from "next-intl";
@@ -16,17 +16,20 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     
     setLoading(true);
     
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(form);
     const result = await registerUser(formData);
     
     setLoading(false);
 
       if (result.success) {
         toast.success(t('success'));
-        e.currentTarget.reset(); // Formu temizle
+        form.reset(); // Formu temizle
+        router.push("/");
+        setTimeout(() => openSidebar(), 100);
       } else {
         toast.error(result.error || t('failed'));
       }

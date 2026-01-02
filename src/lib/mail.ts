@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-const domain = process.env.FRONTEND_URL || "http://localhost:3000";
+const domain = process.env.FRONTEND_URL || "http://localhost:4000";
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
