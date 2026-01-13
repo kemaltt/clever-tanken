@@ -1,0 +1,53 @@
+{
+  "common": {
+    "search": "Ara",
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "km": "km",
+    "open": "AÇIK",
+    "closed": "KAPALI",
+    "more": "Daha Fazla",
+    "less": "Daha Az",
+    "back": "Geri",
+    "directions": "Tarif",
+    "diesel": "Dizel"
+  },
+  "home": {
+    "title": "Günstiger Tanken",
+    "subtitle": "En uygun fiyatları keşfedin",
+    "location_placeholder": "Posta kodu veya şehir",
+    "fuel_type": "Yakıt Tipi",
+    "search_radius": "Arama Mesafesi",
+    "select_language": "Dil Seçin",
+    "find_prices": "Fiyatları Bul",
+    "nearby_stations": "Yakındaki İstasyonlar",
+    "view_all": "Tümünü Gör",
+    "current_location": "Geçerli Konumum",
+    "show_closest": "En yakın istasyonları göster"
+  },
+  "results": {
+    "title": "İstasyonlar",
+    "searching": "İstasyonlar aranıyor...",
+    "no_stations": "Yakınınızda istasyon bulunamadı. Lütfen filtreleri kontrol edin."
+  },
+  "station_detail": {
+    "status": "Durum",
+    "address": "Adres",
+    "get_directions": "Yol Tarifi Al",
+    "choose_map": "Harita Seçin",
+    "cancel": "İptal",
+    "unavailable": "Servis geçici olarak kullanılamıyor"
+  },
+  "favorites": {
+    "title": "Favorilerim",
+    "subtitle": "Kaydettiğin tüm istasyonlar burada.",
+    "no_favorites": "Henüz favorin yok",
+    "no_favorites_desc": "İstasyon detay sayfasındaki kalp ikonuna basarak favorilerini buraya ekleyebilirsin.",
+    "explore": "İstasyon Keşfet"
+  },
+  "tabs": {
+    "home": "Keşfet",
+    "stations": "Fiyatlar",
+    "favorites": "Favori"
+  }
+}

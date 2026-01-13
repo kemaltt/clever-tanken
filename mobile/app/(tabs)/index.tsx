@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, ImageBackground, Alert, ActivityIndicator } from 'react-native';
-import { Search, MapPin, Fuel, ChevronRight, Navigation, Map as MapIcon } from 'lucide-react-native';
+import { Search, MapPin, Fuel, ChevronRight, Navigation, Map as MapIcon, Globe } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
 import * as Location from 'expo-location';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import Config from '@/constants/Config';
 
@@ -21,15 +22,58 @@ interface Station {
 }
 
 export default function HomeScreen() {
+  const { t, i18n } = useTranslation();
   const [zipCode, setZipCode] = useState('');
   const [fuelType, setFuelType] = useState('diesel');
   const [loading, setLoading] = useState(false);
   const [nearbyStations, setNearbyStations] = useState<Station[]>([]);
   const [fetchingNearby, setFetchingNearby] = useState(false);
   const [showAllTypes, setShowAllTypes] = useState(false);
+  const [radius, setRadius] = useState(10);
+
+  const cycleLanguage = () => {
+    const langs = ['de', 'en', 'tr'];
+    const currentIndex = langs.indexOf(i18n.language.split('-')[0]);
+    const nextIndex = (currentIndex + 1) % langs.length;
+    i18n.changeLanguage(langs[nextIndex]);
+  };
+
+  const getFlagStyle = () => {
+    const lang = i18n.language.split('-')[0];
+    switch (lang) {
+      case 'de':
+        return { 
+          bg: 'bg-black/20', 
+          border: 'border-white/10', 
+          emoji: '🇩🇪' 
+        };
+      case 'en':
+        return { 
+          bg: 'bg-black/20', 
+          border: 'border-white/10', 
+          emoji: '🇬🇧' 
+        };
+      case 'tr':
+        return { 
+          bg: 'bg-black/20', 
+          border: 'border-white/10', 
+          emoji: '🇹🇷' 
+        };
+      default:
+        return { 
+          bg: 'bg-black/20', 
+          border: 'border-white/10', 
+          emoji: '🌐' 
+        };
+    }
+  };
+
+  const changeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
 
   const fuelTypes = [
-    { id: 'diesel', label: 'Diesel' },
+    { id: 'diesel', label: t('common.diesel', { defaultValue: 'Diesel' }) },
     { id: 'e10', label: 'Super E10' },
     { id: 'e5', label: 'Super E5' },
     { id: 'superplus', label: 'SuperPlus' },
@@ -50,7 +94,7 @@ export default function HomeScreen() {
   useEffect(() => {
     // Request permission on mount and re-fetch if fuelType changes
     initLocation();
-  }, [fuelType]);
+  }, [fuelType, radius]);
 
   const initLocation = async () => {
     try {
@@ -72,11 +116,11 @@ export default function HomeScreen() {
           lat: location.coords.latitude,
           lng: location.coords.longitude,
           type: fuelType,
-          rad: 5
+          rad: radius
         }
       });
       if (response.data.ok) {
-        setNearbyStations(response.data.stations.slice(0, 3));
+        setNearbyStations(response.data.stations);
       }
     } catch (error) {
       console.error('Fetch nearby error:', error);
@@ -89,7 +133,7 @@ export default function HomeScreen() {
     // Navigate to results
     router.push({
         pathname: '/(tabs)/two', 
-        params: { zipCode, fuelType }
+        params: { zipCode, fuelType, rad: radius.toString() }
     });
   };
 
@@ -110,7 +154,8 @@ export default function HomeScreen() {
         params: {
           lat: location.coords.latitude.toString(),
           lng: location.coords.longitude.toString(),
-          fuelType
+          fuelType,
+          rad: radius.toString()
         }
       });
     } catch (error) {
@@ -129,17 +174,29 @@ export default function HomeScreen() {
         resizeMode="cover"
       >
         <ScrollView className="flex-1 bg-black/40 px-6 pt-20">
-          <Text className="text-4xl font-bold text-white mb-2">Günstiger Tanken</Text>
-          <Text className="text-lg text-gray-300 mb-8">En uygun fiyatları keşfedin</Text>
+          <View className="flex-row justify-between items-start mb-2">
+            <View>
+              <Text className="text-4xl font-bold text-white leading-tight">{t('home.title')}</Text>
+              <Text className="text-lg text-gray-300">{t('home.subtitle')}</Text>
+            </View>
+            <TouchableOpacity 
+              onPress={cycleLanguage}
+              className={`${getFlagStyle().bg} p-2 rounded-2xl border border-white/10 shadow-lg backdrop-blur-md items-center justify-center w-12 h-12`}
+            >
+              <Text className="text-2xl">{getFlagStyle().emoji}</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View className="h-4" />
 
           {/* Using style instead of className for BlurView to avoid cssInterop complexity for now */}
           <BlurView intensity={30} tint="dark" style={{ borderRadius: 24, padding: 24, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', overflow: 'hidden' }}>
             <View className="mb-6">
-              <Text className="text-sm font-semibold text-gray-400 mb-2 uppercase">Konum</Text>
+              <Text className="text-sm font-semibold text-gray-400 mb-2 uppercase">{t('home.location_placeholder')}</Text>
               <View className="flex-row items-center bg-white/10 rounded-2xl px-4 py-3 border border-white/5">
                 <MapPin size={20} color="#9ca3af" />
                 <TextInput
-                  placeholder="Posta kodu veya şehir"
+                  placeholder={t('home.location_placeholder')}
                   placeholderTextColor="#6b7280"
                   className="flex-1 ml-3 text-white text-base"
                   value={zipCode}
@@ -150,10 +207,10 @@ export default function HomeScreen() {
 
             <View className="mb-8">
               <View className="flex-row justify-between items-end mb-3">
-                <Text className="text-sm font-semibold text-gray-400 uppercase">Yakıt Tipi</Text>
+                <Text className="text-sm font-semibold text-gray-400 uppercase">{t('home.fuel_type')}</Text>
                 <TouchableOpacity onPress={() => setShowAllTypes(!showAllTypes)}>
                   <Text className="text-blue-400 text-xs font-bold uppercase">
-                    {showAllTypes ? 'Daha Az' : 'Daha Fazla'}
+                    {showAllTypes ? t('common.less') : t('common.more')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -179,21 +236,49 @@ export default function HomeScreen() {
               </View>
             </View>
 
+            <View className="mb-8">
+              <Text className="text-sm font-semibold text-gray-400 mb-3 uppercase">{t('home.search_radius')}</Text>
+              <View className="flex-row gap-2">
+                {[5, 10, 15, 25].map((r) => (
+                  <TouchableOpacity
+                    key={r}
+                    onPress={() => setRadius(r)}
+                    className={`flex-1 py-3 items-center rounded-2xl border ${
+                      radius === r 
+                        ? 'bg-blue-600 border-blue-500' 
+                        : 'bg-white/5 border-white/5'
+                    }`}
+                  >
+                    <Text className={`font-bold ${
+                      radius === r ? 'text-white' : 'text-gray-400'
+                    }`}>
+                      {r} {t('common.km')}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
             <TouchableOpacity 
               onPress={handleSearch}
               disabled={loading}
               className={`bg-blue-600 py-4 rounded-2xl flex-row justify-center items-center shadow-lg shadow-blue-500/50 ${loading ? 'opacity-50' : ''}`}
             >
               <Search size={22} color="white" />
-              <Text className="text-white font-bold text-lg ml-2">{loading ? 'Aranıyor...' : 'Fiyatları Bul'}</Text>
+              <Text className="text-white font-bold text-lg ml-2">{loading ? t('common.loading') : t('home.find_prices')}</Text>
             </TouchableOpacity>
           </BlurView>
 
           <View className="mt-10 mb-20">
             <View className="flex-row justify-between items-center mb-4">
-              <Text className="text-xl font-bold text-white">Yakındaki İstasyonlar</Text>
+              <View className="flex-row items-center">
+                <Text className="text-xl font-bold text-white">{t('home.nearby_stations')}</Text>
+                <View className="ml-3 bg-blue-500/20 px-2 py-0.5 rounded-md">
+                   <Text className="text-blue-400 text-xs font-bold">{nearbyStations.length}</Text>
+                </View>
+              </View>
               <TouchableOpacity onPress={handleCurrentLocation}>
-                <Text className="text-blue-400 font-semibold">Tümünü Gör</Text>
+                <Text className="text-blue-400 font-semibold">{t('home.view_all')}</Text>
               </TouchableOpacity>
             </View>
 
@@ -228,8 +313,8 @@ export default function HomeScreen() {
                   <Navigation size={22} color="#3b82f6" />
                 </View>
                 <View className="flex-1 ml-4">
-                  <Text className="text-white font-semibold text-base">Geçerli Konumum</Text>
-                  <Text className="text-gray-500 text-sm">En yakın istasyonları göster</Text>
+                  <Text className="text-white font-semibold text-base">{t('home.current_location')}</Text>
+                  <Text className="text-gray-500 text-sm">{t('home.show_closest')}</Text>
                 </View>
                 <ChevronRight size={20} color="#4b5563" />
               </TouchableOpacity>

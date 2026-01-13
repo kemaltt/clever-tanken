@@ -1,0 +1,53 @@
+{
+  "common": {
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "km": "km",
+    "open": "OPEN",
+    "closed": "CLOSED",
+    "more": "More",
+    "less": "Less",
+    "back": "Back",
+    "directions": "Directions",
+    "diesel": "Diesel"
+  },
+  "home": {
+    "title": "Cheap Fuel",
+    "subtitle": "Discover the best prices",
+    "location_placeholder": "Zip code or city",
+    "fuel_type": "Fuel Type",
+    "search_radius": "Search Radius",
+    "select_language": "Select Language",
+    "find_prices": "Find Prices",
+    "nearby_stations": "Nearby Stations",
+    "view_all": "View All",
+    "current_location": "Current Location",
+    "show_closest": "Show closest stations"
+  },
+  "results": {
+    "title": "Stations",
+    "searching": "Searching for stations...",
+    "no_stations": "No stations found nearby. Please check your filters."
+  },
+  "station_detail": {
+    "status": "Status",
+    "address": "Address",
+    "get_directions": "Get Directions",
+    "choose_map": "Choose Map",
+    "cancel": "Cancel",
+    "unavailable": "Service temporarily unavailable"
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "subtitle": "All your saved stations are here.",
+    "no_favorites": "No favorites yet",
+    "no_favorites_desc": "Tap the heart icon on a station detail page to save it here.",
+    "explore": "Explore Stations"
+  },
+  "tabs": {
+    "home": "Discover",
+    "stations": "Prices",
+    "favorites": "Favorites"
+  }
+}

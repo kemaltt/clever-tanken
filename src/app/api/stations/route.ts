@@ -38,8 +38,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ ok: true, stations, center: { lat, lng } });
   } catch (error: any) {
     return NextResponse.json(
-      { ok: false, message: error.message || "Failed to fetch stations" },
-      { status: 500 }
+      { ok: false, message: error.message || "İstasyonlar getirilemedi." },
+      { status: 200 } // Status 200 to allow Axios to read the data without throwing
     );
   }
 }

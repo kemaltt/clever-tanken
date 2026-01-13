@@ -1,0 +1,53 @@
+{
+  "common": {
+    "search": "Suchen",
+    "loading": "Lädt...",
+    "error": "Fehler",
+    "km": "km",
+    "open": "GEÖFFNET",
+    "closed": "GESCHLOSSEN",
+    "more": "Mehr",
+    "less": "Weniger",
+    "back": "Zurück",
+    "directions": "Route",
+    "diesel": "Diesel"
+  },
+  "home": {
+    "title": "Günstiger Tanken",
+    "subtitle": "Entdecke die besten Preise",
+    "location_placeholder": "PLZ oder Stadt",
+    "fuel_type": "Kraftstoffart",
+    "search_radius": "Suchradius",
+    "select_language": "Sprache wählen",
+    "find_prices": "Preise finden",
+    "nearby_stations": "Stationen in der Nähe",
+    "view_all": "Alle ansehen",
+    "current_location": "Mein Standort",
+    "show_closest": "Nächste Stationen anzeigen"
+  },
+  "results": {
+    "title": "Stationen",
+    "searching": "Stationen werden gesucht...",
+    "no_stations": "Keine Stationen in der Nähe gefunden. Bitte Filter prüfen."
+  },
+  "station_detail": {
+    "status": "Status",
+    "address": "Adresse",
+    "get_directions": "Yol Tarifi Al",
+    "choose_map": "Karte wählen",
+    "cancel": "Abbrechen",
+    "unavailable": "Dienst vorübergehend nicht verfügbar"
+  },
+  "favorites": {
+    "title": "Meine Favoriten",
+    "subtitle": "Alle deine gespeicherten Stationen.",
+    "no_favorites": "Noch keine Favoriten",
+    "no_favorites_desc": "Klicke auf das Herz-Icon bei einer Station, um sie hier zu speichern.",
+    "explore": "Stationen entdecken"
+  },
+  "tabs": {
+    "home": "Entdecken",
+    "stations": "Preise",
+    "favorites": "Favoriten"
+  }
+}

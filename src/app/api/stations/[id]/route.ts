@@ -21,9 +21,9 @@ export async function GET(
     return NextResponse.json(
       {
         ok: false,
-        message: error.message || "Failed to fetch station details",
+        message: error.message || "İstasyon detayları alınamadı.",
       },
-      { status: 500 }
+      { status: 200 }
     );
   }
 }

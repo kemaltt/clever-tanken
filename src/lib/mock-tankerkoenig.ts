@@ -1,8 +1,33 @@
 import { TankerKoenigStation } from "./tankerkoenig";
 
-const BRANDS = ["Aral", "Shell", "Esso", "TotalEnergies", "JET", "Star", "HEM", "Avia"];
-const STREETS = ["Hauptstraße", "Bahnhofstraße", "Dorfstraße", "Schulstraße", "Gartenstraße", "Bergstraße"];
-const PLACES = ["Berlin", "München", "Hamburg", "Köln", "Frankfurt", "Stuttgart", "Düsseldorf", "Leipzig"];
+const BRANDS = [
+  "Aral",
+  "Shell",
+  "Esso",
+  "TotalEnergies",
+  "JET",
+  "Star",
+  "HEM",
+  "Avia",
+];
+const STREETS = [
+  "Hauptstraße",
+  "Bahnhofstraße",
+  "Dorfstraße",
+  "Schulstraße",
+  "Gartenstraße",
+  "Bergstraße",
+];
+const PLACES = [
+  "Berlin",
+  "München",
+  "Hamburg",
+  "Köln",
+  "Frankfurt",
+  "Stuttgart",
+  "Düsseldorf",
+  "Leipzig",
+];
 
 // Simple seeded random number generator
 function seededRandom(seed: number) {
@@ -21,16 +46,25 @@ export async function getMockStations(
   // Create a seed from the coordinates to ensure deterministic results for the same location
   let seed = lat + lng + radius;
 
-  const count = Math.floor(seededRandom(seed) * 5) + 3; // Generate 3-8 stations
+  // Generate station count proportional to radius (min 5, max 40)
+  // Higher base count + multiplier based on radius
+  const baseCount = 5;
+  const radiusMultiplier = radius * 1.5;
+  const count = Math.min(
+    40,
+    Math.floor(baseCount + radiusMultiplier * (0.5 + seededRandom(seed) * 0.5))
+  );
+
   const stations: TankerKoenigStation[] = [];
 
   for (let i = 0; i < count; i++) {
     seed += 1;
-    // Random offset from center
-    const latOffset = (seededRandom(seed) - 0.5) * 0.05;
+    // Random offset from center, scaled by radius (roughly 0.01 degree per km)
+    const offsetRange = (radius / 111) * 0.8;
+    const latOffset = (seededRandom(seed) - 0.5) * offsetRange;
     seed += 1;
-    const lngOffset = (seededRandom(seed) - 0.5) * 0.05;
-    
+    const lngOffset = (seededRandom(seed) - 0.5) * offsetRange;
+
     seed += 1;
     const brandIndex = Math.floor(seededRandom(seed) * BRANDS.length);
     seed += 1;
@@ -52,7 +86,7 @@ export async function getMockStations(
       lat: lat + latOffset,
       lng: lng + lngOffset,
       dist: seededRandom(seed + 3) * radius,
-      price: 1.60 + (seededRandom(seed + 4) * 0.30), // Price between 1.60 and 1.90
+      price: 1.6 + seededRandom(seed + 4) * 0.3, // Price between 1.60 and 1.90
       isOpen: true,
     });
   }

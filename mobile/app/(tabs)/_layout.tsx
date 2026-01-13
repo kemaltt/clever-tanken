@@ -1,9 +1,11 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { Search, Heart, User, Map } from 'lucide-react-native';
-import { View } from 'react-native';
+import { Search, Heart, Map } from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
 
 export default function TabLayout() {
+  const { t } = useTranslation();
+
   return (
     <Tabs
       screenOptions={{
@@ -26,24 +28,21 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Arama',
-          tabBarLabel: 'Keşfet',
+          tabBarLabel: t('tabs.home'),
           tabBarIcon: ({ color }) => <Search size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="two"
         options={{
-          title: 'İstasyonlar',
-          tabBarLabel: 'Fiyatlar',
+          tabBarLabel: t('tabs.stations'),
           tabBarIcon: ({ color }) => <Map size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="favorites"
         options={{
-          title: 'Favoriler',
-          tabBarLabel: 'Favori',
+          tabBarLabel: t('tabs.favorites'),
           tabBarIcon: ({ color }) => <Heart size={24} color={color} />,
         }}
       />

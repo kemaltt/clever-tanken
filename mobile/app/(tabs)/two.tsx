@@ -4,6 +4,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { Map, List, ChevronLeft, MapPin, Navigation, Info } from 'lucide-react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import Config from '@/constants/Config';
 
@@ -21,6 +22,7 @@ interface Station {
 }
 
 export default function ResultsScreen() {
+  const { t } = useTranslation();
   const params = useLocalSearchParams();
   const [stations, setStations] = useState<Station[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,7 +36,7 @@ export default function ResultsScreen() {
 
   useEffect(() => {
     fetchStations();
-  }, [params.zipCode, params.fuelType, params.lat, params.lng]);
+  }, [params.zipCode, params.fuelType, params.lat, params.lng, params.rad]);
 
   const fetchStations = async () => {
     try {
@@ -55,7 +57,7 @@ export default function ResultsScreen() {
 
       const apiParams: any = {
         type: params.fuelType || 'diesel',
-        rad: 10
+        rad: params.rad || 10
       };
 
       if (queryLat && queryLng) {
@@ -78,9 +80,12 @@ export default function ResultsScreen() {
             longitude: response.data.center.lng,
           });
         }
+      } else {
+        alert(response.data.message || t('results.no_stations'));
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching stations:', error);
+      alert(t('common.error') + ': ' + t('station_detail.unavailable'));
     } finally {
       setLoading(false);
     }
@@ -102,7 +107,7 @@ export default function ResultsScreen() {
             <Text className="text-xs text-blue-400/60 font-medium ml-0.5">€</Text>
           </Text>
           <Text className={`text-[10px] font-black uppercase mt-1 tracking-tighter ${item.isOpen ? 'text-green-500' : 'text-red-500'}`}>
-            {item.isOpen ? 'AÇIK' : 'KAPALI'}
+            {item.isOpen ? t('common.open') : t('common.closed')}
           </Text>
         </View>
       </View>
@@ -115,7 +120,7 @@ export default function ResultsScreen() {
           <Text className="text-gray-400 text-xs ml-2 flex-1" numberOfLines={1}>{item.street}, {item.place}</Text>
         </View>
         <View className="bg-gray-800/80 px-3 py-1.5 rounded-xl border border-white/5">
-          <Text className="text-gray-300 text-[10px] font-bold">{item.dist.toFixed(1)} km</Text>
+          <Text className="text-gray-300 text-[10px] font-bold">{item.dist.toFixed(1)} {t('common.km')}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -128,7 +133,7 @@ export default function ResultsScreen() {
         <TouchableOpacity onPress={() => router.back()} className="bg-white/5 p-2 rounded-xl border border-white/5">
           <ChevronLeft size={22} color="white" />
         </TouchableOpacity>
-        <Text className="text-white font-bold text-xl tracking-tight">İstasyonlar</Text>
+        <Text className="text-white font-bold text-xl tracking-tight">{t('results.title')}</Text>
         <TouchableOpacity 
           onPress={() => setViewMode(viewMode === 'list' ? 'map' : 'list')}
           className="bg-blue-600/10 p-2.5 rounded-xl border border-blue-500/20"
@@ -140,7 +145,7 @@ export default function ResultsScreen() {
       {loading ? (
         <View className="flex-1 justify-center items-center">
           <ActivityIndicator size="large" color="#3b82f6" />
-          <Text className="text-gray-500 mt-4 font-medium">İstasyonlar aranıyor...</Text>
+          <Text className="text-gray-500 mt-4 font-medium">{t('results.searching')}</Text>
         </View>
       ) : viewMode === 'list' ? (
         <FlatList
@@ -154,7 +159,7 @@ export default function ResultsScreen() {
               <View className="bg-white/5 p-6 rounded-full mb-4">
                 <Info size={40} color="#334155" />
               </View>
-              <Text className="text-gray-400 text-center font-medium leading-5">Yakınınızda istasyon bulunamadı. Lütfen filtreleri kontrol edin.</Text>
+              <Text className="text-gray-400 text-center font-medium leading-5">{t('results.no_stations')}</Text>
             </View>
           }
         />

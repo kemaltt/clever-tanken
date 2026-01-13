@@ -37,21 +37,37 @@ export async function getStations(
   }
 
   try {
-    // API requirement: if type is 'all', sort must be 'dist'
     const apiSort = type === "all" ? "dist" : sort;
     const url = `${BASE_URL}?lat=${lat}&lng=${lng}&rad=${rad}&sort=${apiSort}&type=${type}&apikey=${API_KEY}`;
-    const response = await fetch(url, { next: { revalidate: 300 } }); // Cache for 5 minutes
+
+    // Attempt real API call
+    let response;
+    try {
+      response = await fetch(url, { next: { revalidate: 300 } });
+    } catch (fetchError) {
+      console.warn(
+        "TankerKoenig fetch failed, using mock fallback:",
+        fetchError
+      );
+      return getMockStations(lat, lng, rad);
+    }
 
     if (!response.ok) {
-      throw new Error(`TankerKoenig API error: ${response.statusText}`);
+      console.warn(
+        `TankerKoenig API HTTP Error: ${response.status} ${response.statusText}. Using mock fallback.`
+      );
+      return getMockStations(lat, lng, rad);
     }
 
     const data = await response.json();
 
     if (!data.ok) {
-      // Fallback to mock if API limit reached or other API error
-      console.error("TankerKoenig API returned error:", data.message);
-      throw new Error(data.message);
+      console.warn(
+        "TankerKoenig API Business Error:",
+        data.message,
+        "Using mock fallback."
+      );
+      return getMockStations(lat, lng, rad);
     }
 
     let stations = data.stations.map((station: any) => ({
@@ -98,12 +114,23 @@ export async function getStationDetail(id: string): Promise<any> {
   try {
     const response = await fetch(url, { next: { revalidate: 60 } }); // Cache for 1 minute
     if (!response.ok) {
-      throw new Error(`TankerKoenig Detail API error: ${response.statusText}`);
+      console.error(
+        `TankerKoenig Detail API HTTP Error: ${response.status} ${response.statusText} for ID: ${id}`
+      );
+      throw new Error(
+        "İstasyon detay servisine şu anda ulaşılamıyor. Lütfen daha sonra tekrar deneyin."
+      );
     }
 
     const data = await response.json();
     if (!data.ok) {
-      throw new Error(data.message || "Failed to fetch station details");
+      console.error(
+        "TankerKoenig Detail API Business Error:",
+        data.message,
+        "ID:",
+        id
+      );
+      throw new Error(data.message || "İstasyon detayları bulunamadı.");
     }
 
     return data.station;

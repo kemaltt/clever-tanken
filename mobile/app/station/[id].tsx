@@ -4,6 +4,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { ChevronLeft, MapPin, Clock, Phone, Navigation, Heart, Share2, Info, Fuel } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';
 import MapView, { Marker } from 'react-native-maps';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import Config from '@/constants/Config';
 import { Favorites } from '@/utils/Favorites';
@@ -26,6 +27,7 @@ interface StationDetail {
 }
 
 export default function StationDetailScreen() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams();
   const [station, setStation] = useState<StationDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -49,9 +51,14 @@ export default function StationDetailScreen() {
       const response = await axios.get(`${Config.API_BASE_URL}/stations/${id}`);
       if (response.data.ok) {
         setStation(response.data.station);
+      } else {
+        alert(response.data.message || t('station_detail.unavailable'));
+        router.back();
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching station detail:', error);
+      alert(t('common.error') + ': ' + t('station_detail.unavailable'));
+      router.back();
     } finally {
       setLoading(false);
     }
@@ -84,8 +91,8 @@ export default function StationDetailScreen() {
 
     if (Platform.OS === 'ios') {
       Alert.alert(
-        'Yol Tarifi',
-        'Gitmek istediğiniz uygulamayı seçin:',
+        t('common.directions'),
+        t('station_detail.choose_map'),
         [
           {
             text: 'Apple Haritalar',
@@ -104,7 +111,7 @@ export default function StationDetailScreen() {
             },
           },
           {
-            text: 'İptal',
+            text: t('station_detail.cancel'),
             style: 'cancel',
           },
         ]
@@ -119,7 +126,7 @@ export default function StationDetailScreen() {
     return (
       <View className="flex-1 bg-black justify-center items-center">
         <ActivityIndicator size="large" color="#3b82f6" />
-        <Text className="text-gray-400 mt-4 font-medium">İstasyon bilgileri yükleniyor...</Text>
+        <Text className="text-gray-400 mt-4 font-medium">{t('common.loading')}</Text>
       </View>
     );
   }
@@ -128,12 +135,12 @@ export default function StationDetailScreen() {
     return (
       <View className="flex-1 bg-black justify-center items-center px-10">
         <Info size={48} color="#374151" />
-        <Text className="text-gray-400 text-center mt-4">İstasyon bulunamadı. Lütfen daha sonra tekrar deneyin.</Text>
+        <Text className="text-gray-400 text-center mt-4">{t('results.no_stations')}</Text>
         <TouchableOpacity 
           onPress={() => router.back()}
           className="mt-6 bg-blue-600 px-8 py-3 rounded-full"
         >
-          <Text className="text-white font-bold">Geri Dön</Text>
+          <Text className="text-white font-bold">{t('common.back')}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -173,7 +180,7 @@ export default function StationDetailScreen() {
               <View className="flex-row items-center">
                 <View className={`px-2 py-1 rounded-md mr-3 ${station.isOpen ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
                   <Text className={`text-[10px] font-bold ${station.isOpen ? 'text-green-500' : 'text-red-500'}`}>
-                    {station.isOpen ? 'AÇIK' : 'KAPALI'}
+                    {station.isOpen ? t('common.open') : t('common.closed')}
                   </Text>
                 </View>
                 <Text className="text-gray-300 text-sm">{station.brand}</Text>
@@ -185,7 +192,7 @@ export default function StationDetailScreen() {
         {/* Content */}
         <View className="px-6 -mt-6">
           <BlurView intensity={30} tint="dark" style={{ borderRadius: 32, padding: 24, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)', overflow: 'hidden' }}>
-            <Text className="text-gray-400 text-sm font-bold uppercase mb-4 tracking-widest">Güncel Fiyatlar</Text>
+            <Text className="text-gray-400 text-sm font-bold uppercase mb-4 tracking-widest">{t('home.fuel_type')}</Text>
             
             <View className="flex-row gap-4 mb-2">
               <PriceCard label="Diesel" price={station.diesel} />
@@ -201,18 +208,18 @@ export default function StationDetailScreen() {
           <View className="mt-8 gap-4">
             <InfoRow 
               icon={<MapPin size={22} color="#3b82f6" />} 
-              label="Adres" 
+              label={t('station_detail.address')} 
               value={`${station.street} ${station.houseNumber}, ${station.postCode} ${station.place}`} 
             />
             <InfoRow 
               icon={<Clock size={22} color="#3b82f6" />} 
-              label="Çalışma Saatleri" 
-              value={station.isOpen ? "Şu an açık • 24 saat" : "Şu an kapalı"} 
+              label={t('station_detail.status')} 
+              value={station.isOpen ? `${t('common.open')} • 24h` : t('common.closed')} 
             />
             <InfoRow 
               icon={<Fuel size={22} color="#3b82f6" />} 
-              label="İstasyon Tipi" 
-              value={station.brand || "Bağımsız İstasyon"} 
+              label={t('home.fuel_type')} 
+              value={station.brand || "Independent"} 
             />
           </View>
 
@@ -244,7 +251,7 @@ export default function StationDetailScreen() {
             className="bg-blue-600 mt-10 mb-20 py-5 rounded-3xl flex-row justify-center items-center shadow-lg shadow-blue-500/50"
           >
             <Navigation size={22} color="white" />
-            <Text className="text-white font-bold text-lg ml-3">Yol Tarifi Al</Text>
+            <Text className="text-white font-bold text-lg ml-3">{t('station_detail.get_directions')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

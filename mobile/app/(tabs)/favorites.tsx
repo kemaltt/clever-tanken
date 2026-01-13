@@ -2,9 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useFocusEffect, router } from 'expo-router';
 import { Heart, MapPin, Navigation, Info, ChevronRight } from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
 import { Favorites, FavoriteStation } from '@/utils/Favorites';
 
 export default function FavoritesScreen() {
+  const { t } = useTranslation();
   const [favorites, setFavorites] = useState<FavoriteStation[]>([]);
 
   useFocusEffect(
@@ -55,8 +57,8 @@ export default function FavoritesScreen() {
     <View className="flex-1 bg-[#020617]">
       {/* Header */}
       <View className="px-6 pt-14 pb-5 bg-gradient-to-b from-blue-600/10 to-transparent">
-        <Text className="text-white font-bold text-3xl tracking-tighter">Favorilerim</Text>
-        <Text className="text-gray-500 text-sm mt-1">Kaydettiğin tüm istasyonlar burada.</Text>
+        <Text className="text-white font-bold text-3xl tracking-tighter">{t('favorites.title')}</Text>
+        <Text className="text-gray-500 text-sm mt-1">{t('favorites.subtitle')}</Text>
       </View>
 
       {favorites.length === 0 ? (
@@ -64,15 +66,15 @@ export default function FavoritesScreen() {
           <View className="bg-white/5 p-8 rounded-full mb-6">
             <Heart size={48} color="#334155" />
           </View>
-          <Text className="text-white font-bold text-xl mb-2">Henüz favorin yok</Text>
+          <Text className="text-white font-bold text-xl mb-2">{t('favorites.no_favorites')}</Text>
           <Text className="text-gray-500 text-center font-medium leading-5">
-            İstasyon detay sayfasındaki kalp ikonuna basarak favorilerini buraya ekleyebilirsin.
+            {t('favorites.no_favorites_desc')}
           </Text>
           <TouchableOpacity 
             onPress={() => router.push('/(tabs)')}
             className="mt-8 bg-blue-600 px-8 py-4 rounded-2xl"
           >
-            <Text className="text-white font-bold">İstasyon Keşfet</Text>
+            <Text className="text-white font-bold">{t('favorites.explore')}</Text>
           </TouchableOpacity>
         </View>
       ) : (
