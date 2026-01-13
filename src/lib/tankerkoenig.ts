@@ -49,9 +49,9 @@ export async function getStations(
     const data = await response.json();
 
     if (!data.ok) {
-        // Fallback to mock if API limit reached or other API error
-        console.error("TankerKoenig API returned error:", data.message);
-        throw new Error(data.message);
+      // Fallback to mock if API limit reached or other API error
+      console.error("TankerKoenig API returned error:", data.message);
+      throw new Error(data.message);
     }
 
     let stations = data.stations.map((station: any) => ({
@@ -74,14 +74,41 @@ export async function getStations(
 
     // Manually sort by price if type was 'all' and sort was 'price' (since API forced 'dist')
     if (type === "all" && sort === "price") {
-      stations.sort((a: TankerKoenigStation, b: TankerKoenigStation) => (a.price ?? Infinity) - (b.price ?? Infinity));
+      stations.sort(
+        (a: TankerKoenigStation, b: TankerKoenigStation) =>
+          (a.price ?? Infinity) - (b.price ?? Infinity)
+      );
     }
 
     return stations;
   } catch (error) {
     console.error("Failed to fetch stations:", error);
     throw error;
-    // Fallback to mock on network error
-    // return getMockStations(lat, lng, rad);
+  }
+}
+
+export async function getStationDetail(id: string): Promise<any> {
+  if (!API_KEY) {
+    throw new Error("API Key is missing");
+  }
+
+  const DETAIL_URL = "https://creativecommons.tankerkoenig.de/json/detail.php";
+  const url = `${DETAIL_URL}?id=${id}&apikey=${API_KEY}`;
+
+  try {
+    const response = await fetch(url, { next: { revalidate: 60 } }); // Cache for 1 minute
+    if (!response.ok) {
+      throw new Error(`TankerKoenig Detail API error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    if (!data.ok) {
+      throw new Error(data.message || "Failed to fetch station details");
+    }
+
+    return data.station;
+  } catch (error) {
+    console.error("Failed to fetch station detail:", error);
+    throw error;
   }
 }

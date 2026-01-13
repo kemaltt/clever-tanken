@@ -204,12 +204,7 @@ export default function HomeScreen() {
                 <TouchableOpacity 
                   key={station.id}
                   className="flex-row items-center bg-white/5 rounded-2xl p-4 border border-white/5 mb-3"
-                  onPress={() => {
-                    router.push({
-                      pathname: '/(tabs)/two',
-                      params: { lat: station.lat.toString(), lng: station.lng.toString(), fuelType }
-                    });
-                  }}
+                  onPress={() => router.push(`/station/${station.id}`)}
                 >
                   <View className="bg-blue-500/20 p-3 rounded-xl">
                     <Navigation size={22} color="#3b82f6" />
