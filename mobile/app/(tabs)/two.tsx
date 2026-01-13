@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Dimensions, StyleSheet } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Map, List, ChevronLeft, MapPin, Navigation, Info } from 'lucide-react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
@@ -41,7 +41,7 @@ export default function ResultsScreen() {
       setLoading(true);
       let queryLat = params.lat;
       let queryLng = params.lng;
-      let queryLocation = params.zipCode;
+      let queryLocation = (params.zipCode as string) || '';
 
       // If no search params, try to get current location
       if (!queryLat && !queryLng && !queryLocation) {
@@ -159,9 +159,10 @@ export default function ResultsScreen() {
           }
         />
       ) : (
-        <View className="flex-1">
+        <View style={{ flex: 1, backgroundColor: '#020617' }}>
           <MapView
-            className="flex-1"
+            provider={PROVIDER_GOOGLE}
+            style={StyleSheet.absoluteFillObject}
             region={mapRegion}
             onRegionChangeComplete={setMapRegion}
             userInterfaceStyle='dark'

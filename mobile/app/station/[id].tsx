@@ -6,6 +6,7 @@ import { BlurView } from 'expo-blur';
 import MapView, { Marker } from 'react-native-maps';
 import axios from 'axios';
 import Config from '@/constants/Config';
+import { Favorites } from '@/utils/Favorites';
 
 interface StationDetail {
   id: string;
@@ -32,7 +33,15 @@ export default function StationDetailScreen() {
 
   useEffect(() => {
     fetchStationDetail();
+    checkIfFavorite();
   }, [id]);
+
+  const checkIfFavorite = async () => {
+    if (typeof id === 'string') {
+      const fav = await Favorites.isFavorite(id);
+      setIsFavorite(fav);
+    }
+  };
 
   const fetchStationDetail = async () => {
     try {
@@ -46,6 +55,22 @@ export default function StationDetailScreen() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleToggleFavorite = async () => {
+    if (!station) return;
+    const isAdded = await Favorites.toggle({
+      id: station.id,
+      name: station.name,
+      brand: station.brand,
+      street: station.street,
+      place: station.place,
+      isOpen: station.isOpen,
+      lat: station.lat,
+      lng: station.lng,
+      price: station.diesel,
+    });
+    setIsFavorite(isAdded);
   };
 
   const handleGetDirections = () => {
@@ -135,7 +160,7 @@ export default function StationDetailScreen() {
                   <Share2 size={22} color="white" />
                 </TouchableOpacity>
                 <TouchableOpacity 
-                  onPress={() => setIsFavorite(!isFavorite)}
+                   onPress={handleToggleFavorite}
                   className="bg-black/40 p-2 rounded-full backdrop-blur-md"
                 >
                   <Heart size={22} color={isFavorite ? "#ef4444" : "white"} fill={isFavorite ? "#ef4444" : "transparent"} />
