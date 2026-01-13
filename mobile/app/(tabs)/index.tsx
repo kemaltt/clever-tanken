@@ -26,12 +26,26 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(false);
   const [nearbyStations, setNearbyStations] = useState<Station[]>([]);
   const [fetchingNearby, setFetchingNearby] = useState(false);
+  const [showAllTypes, setShowAllTypes] = useState(false);
 
   const fuelTypes = [
     { id: 'diesel', label: 'Diesel' },
-    { id: 'e5', label: 'Benzin E5' },
-    { id: 'e10', label: 'Benzin E10' },
+    { id: 'e10', label: 'Super E10' },
+    { id: 'e5', label: 'Super E5' },
+    { id: 'superplus', label: 'SuperPlus' },
+    { id: 'premium_diesel', label: 'Premium Diesel' },
+    { id: 'hvo_diesel', label: 'HVO Diesel' },
+    { id: 'gtl_diesel', label: 'GTL-Diesel' },
+    { id: 'lkw_diesel', label: 'LKW-Diesel' },
+    { id: 'lpg', label: 'LPG' },
+    { id: 'cng', label: 'CNG' },
+    { id: 'lng', label: 'LNG' },
+    { id: 'bioethanol', label: 'Bioethanol' },
+    { id: 'adblue_lkw', label: 'AdBlue LKW' },
+    { id: 'adblue_pkw', label: 'AdBlue PKW' },
   ];
+
+  const visibleFuelTypes = showAllTypes ? fuelTypes : fuelTypes.slice(0, 3);
 
   useEffect(() => {
     // Request permission on mount and re-fetch if fuelType changes
@@ -135,13 +149,21 @@ export default function HomeScreen() {
             </View>
 
             <View className="mb-8">
-              <Text className="text-sm font-semibold text-gray-400 mb-3 uppercase">Yakıt Tipi</Text>
-              <View className="flex-row gap-2">
-                {fuelTypes.map((type) => (
+              <View className="flex-row justify-between items-end mb-3">
+                <Text className="text-sm font-semibold text-gray-400 uppercase">Yakıt Tipi</Text>
+                <TouchableOpacity onPress={() => setShowAllTypes(!showAllTypes)}>
+                  <Text className="text-blue-400 text-xs font-bold uppercase">
+                    {showAllTypes ? 'Daha Az' : 'Daha Fazla'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View className="flex-row flex-wrap gap-2">
+                {visibleFuelTypes.map((type) => (
                   <TouchableOpacity
                     key={type.id}
                     onPress={() => setFuelType(type.id)}
-                    className={`flex-1 py-3 items-center rounded-2xl border ${
+                    style={{ width: '31%' }}
+                    className={`py-3 items-center rounded-2xl border ${
                       fuelType === type.id 
                         ? 'bg-blue-600 border-blue-500' 
                         : 'bg-white/5 border-white/5'

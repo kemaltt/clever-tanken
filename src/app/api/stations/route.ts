@@ -24,8 +24,13 @@ export async function GET(req: NextRequest) {
   }
 
   const rad = parseFloat(searchParams.get("rad") || "5");
-  const type =
-    (searchParams.get("type") as "e5" | "e10" | "diesel" | "all") || "diesel";
+  const rawType = searchParams.get("type");
+  const validTypes = ["e5", "e10", "diesel", "all"];
+  const type = (validTypes.includes(rawType as any) ? rawType : "all") as
+    | "e5"
+    | "e10"
+    | "diesel"
+    | "all";
   const sort = (searchParams.get("sort") as "price" | "dist") || "price";
 
   try {
