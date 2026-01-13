@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "günstiger-tanken",
-    "slug": "günstiger-tanken",
+    "name": "Günstiger Tanken",
+    "slug": "guenstiger-tanken",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "günstiger-tanken",
+    "scheme": "guenstiger-tanken",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kemaltt.günstiger-tanken"
+      "bundleIdentifier": "com.kemaltt.guenstiger-tanken"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,6 +35,19 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a1601788-1fa4-4526-9fa8-fd75f39a0e3e"
+      }
+    },
+    "owner": "kemaltt",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a1601788-1fa4-4526-9fa8-fd75f39a0e3e"
     }
   }
 }
