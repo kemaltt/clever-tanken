@@ -28,7 +28,7 @@ export default function FavoritesScreen() {
       <View className="flex-row justify-between items-start mb-4">
         <View className="flex-1 mr-4">
           <Text className="text-white font-bold text-lg mb-1" numberOfLines={1}>{item.name}</Text>
-          <Text className="text-gray-500 text-xs font-semibold uppercase tracking-wider">{item.brand || 'Libre'}</Text>
+          <Text className="text-gray-500 text-xs font-semibold uppercase tracking-wider">{item.brand || t('common.independent')}</Text>
         </View>
         <View className="items-end">
           <Text className="text-blue-400 font-bold text-2xl">

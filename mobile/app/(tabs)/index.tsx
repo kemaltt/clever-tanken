@@ -74,15 +74,15 @@ export default function HomeScreen() {
 
   const fuelTypes = [
     { id: 'diesel', label: t('common.diesel', { defaultValue: 'Diesel' }) },
-    { id: 'e10', label: 'Super E10' },
-    { id: 'e5', label: 'Super E5' },
-    { id: 'superplus', label: 'SuperPlus' },
+    { id: 'e10', label: t('fuel_types.e10', { defaultValue: 'Super E10' }) },
+    { id: 'e5', label: t('fuel_types.e5', { defaultValue: 'Super E5' }) },
+    { id: 'superplus', label: t('fuel_types.superplus', { defaultValue: 'SuperPlus' }) },
     { id: 'premium_diesel', label: 'Premium Diesel' },
     { id: 'hvo_diesel', label: 'HVO Diesel' },
     { id: 'gtl_diesel', label: 'GTL-Diesel' },
     { id: 'lkw_diesel', label: 'LKW-Diesel' },
-    { id: 'lpg', label: 'LPG' },
-    { id: 'cng', label: 'CNG' },
+    { id: 'lpg', label: t('fuel_types.lpg', { defaultValue: 'LPG' }) },
+    { id: 'cng', label: t('fuel_types.cng', { defaultValue: 'CNG' }) },
     { id: 'lng', label: 'LNG' },
     { id: 'bioethanol', label: 'Bioethanol' },
     { id: 'adblue_lkw', label: 'AdBlue LKW' },
@@ -142,8 +142,8 @@ export default function HomeScreen() {
       setLoading(true);
       const { status } = await Location.requestForegroundPermissionsAsync();
       
-      if (status !== 'granted') {
-        Alert.alert('Yetki Reddedildi', 'Konumunuza erişmek için izin vermeniz gerekmektedir.');
+       if (status !== 'granted') {
+        Alert.alert(t('common.permission_denied'), t('common.permission_denied_desc'));
         return;
       }
 
@@ -160,7 +160,7 @@ export default function HomeScreen() {
       });
     } catch (error) {
       console.error('Location error:', error);
-      Alert.alert('Hata', 'Konumunuz alınamadı. Lütfen tekrar deneyin.');
+      Alert.alert(t('common.location_error'), t('common.location_error_desc'));
     } finally {
       setLoading(false);
     }
@@ -296,7 +296,7 @@ export default function HomeScreen() {
                   </View>
                   <View className="flex-1 ml-4">
                     <Text className="text-white font-semibold text-base" numberOfLines={1}>{station.name}</Text>
-                    <Text className="text-gray-500 text-sm">{station.dist.toFixed(1)} km • {station.brand || 'Libre'}</Text>
+                    <Text className="text-gray-500 text-sm">{station.dist.toFixed(1)} km • {station.brand || t('common.independent')}</Text>
                   </View>
                   <View className="items-end">
                     <Text className="text-blue-400 font-bold text-lg">{station.price.toFixed(2)}€</Text>

@@ -10,7 +10,22 @@
     "less": "Daha Az",
     "back": "Geri",
     "directions": "Tarif",
-    "diesel": "Dizel"
+    "diesel": "Dizel",
+    "independent": "Bağımsız",
+    "no_price": "Fiyat Yok",
+    "map_apple": "Apple Haritalar",
+    "map_google": "Google Haritalar",
+    "permission_denied": "Yetki Reddedildi",
+    "permission_denied_desc": "Konumunuza erişmek için izin vermeniz gerekmektedir.",
+    "location_error": "Hata",
+    "location_error_desc": "Konumunuz alınamadı. Lütfen tekrar deneyin."
+  },
+  "fuel_types": {
+    "e10": "Super E10",
+    "e5": "Super E5",
+    "superplus": "Super Plus",
+    "lpg": "LPG",
+    "cng": "CNG"
   },
   "home": {
     "title": "Günstiger Tanken",

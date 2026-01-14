@@ -10,7 +10,22 @@
     "less": "Weniger",
     "back": "Zurück",
     "directions": "Route",
-    "diesel": "Diesel"
+    "diesel": "Diesel",
+    "independent": "Unabhängig",
+    "no_price": "Kein Preis",
+    "map_apple": "Apple Karten",
+    "map_google": "Google Maps",
+    "permission_denied": "Zugriff verweigert",
+    "permission_denied_desc": "Bitte erlauben Sie den Zugriff auf den Standort.",
+    "location_error": "Fehler",
+    "location_error_desc": "Standort konnte nicht ermittelt werden."
+  },
+  "fuel_types": {
+    "e10": "Super E10",
+    "e5": "Super E5",
+    "superplus": "Super Plus",
+    "lpg": "LPG",
+    "cng": "CNG"
   },
   "home": {
     "title": "Günstiger Tanken",
@@ -33,7 +48,7 @@
   "station_detail": {
     "status": "Status",
     "address": "Adresse",
-    "get_directions": "Yol Tarifi Al",
+    "get_directions": "Route starten",
     "choose_map": "Karte wählen",
     "cancel": "Abbrechen",
     "unavailable": "Dienst vorübergehend nicht verfügbar"

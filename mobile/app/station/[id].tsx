@@ -95,11 +95,11 @@ export default function StationDetailScreen() {
         t('station_detail.choose_map'),
         [
           {
-            text: 'Apple Haritalar',
+            text: t('common.map_apple'),
             onPress: () => Linking.openURL(appleMapsUrl),
           },
           {
-            text: 'Google Haritalar',
+            text: t('common.map_google'),
             onPress: () => {
               Linking.canOpenURL(googleMapsUrl).then((supported) => {
                 if (supported) {
@@ -195,12 +195,12 @@ export default function StationDetailScreen() {
             <Text className="text-gray-400 text-sm font-bold uppercase mb-4 tracking-widest">{t('home.fuel_type')}</Text>
             
             <View className="flex-row gap-4 mb-2">
-              <PriceCard label="Diesel" price={station.diesel} />
-              <PriceCard label="Super E5" price={station.e5} />
+              <PriceCard label={t('common.diesel')} price={station.diesel} />
+              <PriceCard label={t('fuel_types.e5', { defaultValue: 'Super E5' })} price={station.e5} />
             </View>
             <View className="flex-row gap-4">
-              <PriceCard label="Super E10" price={station.e10} highlight />
-              <PriceCard label="Super Plus" price={0} disabled />
+              <PriceCard label={t('fuel_types.e10', { defaultValue: 'Super E10' })} price={station.e10} highlight />
+              <PriceCard label={t('fuel_types.superplus', { defaultValue: 'Super Plus' })} price={0} disabled />
             </View>
           </BlurView>
 
@@ -219,7 +219,7 @@ export default function StationDetailScreen() {
             <InfoRow 
               icon={<Fuel size={22} color="#3b82f6" />} 
               label={t('home.fuel_type')} 
-              value={station.brand || "Independent"} 
+              value={station.brand || t('common.independent')} 
             />
           </View>
 

@@ -99,7 +99,7 @@ export default function ResultsScreen() {
       <View className="flex-row justify-between items-start mb-4">
         <View className="flex-1 mr-4">
           <Text className="text-white font-bold text-lg mb-1" numberOfLines={1}>{item.name}</Text>
-          <Text className="text-gray-500 text-xs font-semibold uppercase tracking-wider">{item.brand || 'Libre'}</Text>
+          <Text className="text-gray-500 text-xs font-semibold uppercase tracking-wider">{item.brand || t('common.independent')}</Text>
         </View>
         <View className="items-end">
           <Text className="text-blue-400 font-bold text-2xl">
@@ -177,7 +177,7 @@ export default function ResultsScreen() {
                 key={station.id}
                 coordinate={{ latitude: station.lat, longitude: station.lng }}
                 title={station.name}
-                description={station.price ? `${station.price.toFixed(3)}€` : 'Fiyat Yok'}
+                description={station.price ? `${station.price.toFixed(3)}€` : t('common.no_price')}
                 onCalloutPress={() => router.push(`/station/${station.id}`)}
               >
                 <View className="bg-blue-600 px-3 py-1.5 rounded-2xl border border-white/20 shadow-lg">

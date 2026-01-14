@@ -10,7 +10,22 @@
     "less": "Less",
     "back": "Back",
     "directions": "Directions",
-    "diesel": "Diesel"
+    "diesel": "Diesel",
+    "independent": "Independent",
+    "no_price": "No Price",
+    "map_apple": "Apple Maps",
+    "map_google": "Google Maps",
+    "permission_denied": "Permission Denied",
+    "permission_denied_desc": "Please enable location services to continue.",
+    "location_error": "Error",
+    "location_error_desc": "Could not determine location."
+  },
+  "fuel_types": {
+    "e10": "Super E10",
+    "e5": "Super E5",
+    "superplus": "Super Plus",
+    "lpg": "LPG",
+    "cng": "CNG"
   },
   "home": {
     "title": "Cheap Fuel",
