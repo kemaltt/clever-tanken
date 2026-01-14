@@ -29,7 +29,7 @@ export default function HomeScreen() {
   const [nearbyStations, setNearbyStations] = useState<Station[]>([]);
   const [fetchingNearby, setFetchingNearby] = useState(false);
   const [showAllTypes, setShowAllTypes] = useState(false);
-  const [radius, setRadius] = useState(10);
+  const [radius, setRadius] = useState(5);
 
   const cycleLanguage = () => {
     const langs = ['de', 'en', 'tr'];
