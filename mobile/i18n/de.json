@@ -51,7 +51,14 @@
     "get_directions": "Route starten",
     "choose_map": "Karte wählen",
     "cancel": "Abbrechen",
-    "unavailable": "Dienst vorübergehend nicht verfügbar"
+    "unavailable": "Dienst vorübergehend nicht verfügbar",
+    "report_issue": "Problem melden",
+    "report_desc": "Was stimmt nicht mit diesem Eintrag?",
+    "send_report": "Meldung senden",
+    "report_success": "Danke!",
+    "report_success_desc": "Deine Meldung wurde erfolgreich gesendet.",
+    "report_fail": "Meldung konnte nicht gesendet werden.",
+    "opening_hours": "Öffnungszeiten"
   },
   "favorites": {
     "title": "Meine Favoriten",

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, ImageBackground, Linking, Platform, Alert } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator, ImageBackground, Linking, Platform, Alert, Modal, TextInput } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
-import { ChevronLeft, MapPin, Clock, Phone, Navigation, Heart, Share2, Info, Fuel } from 'lucide-react-native';
+import { ChevronLeft, MapPin, Clock, Phone, Navigation, Heart, Share2, Info, Fuel, AlertTriangle, X } from 'lucide-react-native';
 import { BlurView } from 'expo-blur';
 import MapView, { Marker } from 'react-native-maps';
 import { useTranslation } from 'react-i18next';
@@ -32,6 +32,9 @@ export default function StationDetailScreen() {
   const [station, setStation] = useState<StationDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [reportModalVisible, setReportModalVisible] = useState(false);
+  const [reportType, setReportType] = useState('wrongPriceDiesel');
+  const [submittingReport, setSubmittingReport] = useState(false);
 
   useEffect(() => {
     fetchStationDetail();
@@ -78,6 +81,27 @@ export default function StationDetailScreen() {
       price: station.diesel,
     });
     setIsFavorite(isAdded);
+  };
+
+  const handleReportIssue = async () => {
+    if (!station) return;
+    setSubmittingReport(true);
+    try {
+        const response = await axios.post(`${Config.API_BASE_URL}/complaint`, {
+            id: station.id,
+            type: reportType
+        });
+        if (response.data.ok) {
+            Alert.alert(t('station_detail.report_success'), t('station_detail.report_success_desc'));
+            setReportModalVisible(false);
+        } else {
+             Alert.alert(t('common.error'), t('station_detail.report_fail'));
+        }
+    } catch (error) {
+        Alert.alert(t('common.error'), t('station_detail.report_fail'));
+    } finally {
+        setSubmittingReport(false);
+    }
   };
 
   const handleGetDirections = () => {
@@ -253,7 +277,66 @@ export default function StationDetailScreen() {
             <Navigation size={22} color="white" />
             <Text className="text-white font-bold text-lg ml-3">{t('station_detail.get_directions')}</Text>
           </TouchableOpacity>
+          
+          <TouchableOpacity 
+            onPress={() => setReportModalVisible(true)}
+            className="flex-row justify-center items-center mb-10"
+          >
+            <AlertTriangle size={18} color="#9ca3af" />
+             <Text className="text-gray-400 font-semibold ml-2">{t('station_detail.report_issue')}</Text>
+          </TouchableOpacity>
+
+          {/* Opening Times Table */}
+          {station.openingTimes && station.openingTimes.length > 0 && (
+             <View className="mb-10 bg-white/5 p-5 rounded-3xl border border-white/5">
+                <Text className="text-gray-400 text-sm font-bold uppercase mb-4 tracking-widest">{t('station_detail.opening_hours')}</Text>
+                {station.openingTimes.map((time, index) => (
+                    <View key={index} className="flex-row justify-between items-start mb-3">
+                        <Text className="text-white font-medium flex-1 mr-2">{time.text}</Text>
+                        <Text className="text-gray-400 font-mono flex-shrink-0">
+                          {time.start.slice(0, 5)} - {time.end.slice(0, 5)}
+                        </Text>
+                    </View>
+                ))}
+             </View>
+          )}
+
         </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={reportModalVisible}
+        onRequestClose={() => setReportModalVisible(false)}
+      >
+        <BlurView intensity={20} tint="dark" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View className="bg-gray-900 w-11/12 rounded-3xl p-6 border border-white/10 shadow-xl">
+                <View className="flex-row justify-between items-center mb-6">
+                    <Text className="text-white font-bold text-xl">{t('station_detail.report_issue')}</Text>
+                    <TouchableOpacity onPress={() => setReportModalVisible(false)}>
+                        <X size={24} color="white" />
+                    </TouchableOpacity>
+                </View>
+                
+                <Text className="text-gray-400 mb-4">{t('station_detail.report_desc')}</Text>
+
+                <TouchableOpacity onPress={() => setReportType('wrongPriceDiesel')} className={`p-4 rounded-xl border mb-2 ${reportType === 'wrongPriceDiesel' ? 'bg-blue-600/20 border-blue-500' : 'bg-white/5 border-white/5'}`}>
+                    <Text className="text-white">Wrong Diesel Price</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setReportType('wrongStatusClosed')} className={`p-4 rounded-xl border mb-6 ${reportType === 'wrongStatusClosed' ? 'bg-blue-600/20 border-blue-500' : 'bg-white/5 border-white/5'}`}>
+                    <Text className="text-white">Station is Closed</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                    onPress={handleReportIssue}
+                    disabled={submittingReport}
+                    className={`bg-red-600 py-4 rounded-xl items-center ${submittingReport ? 'opacity-50' : ''}`}
+                >
+                    <Text className="text-white font-bold">{submittingReport ? t('common.loading') : t('station_detail.send_report')}</Text>
+                </TouchableOpacity>
+            </View>
+        </BlurView>
+      </Modal>
       </ScrollView>
     </View>
   );

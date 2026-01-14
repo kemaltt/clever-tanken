@@ -51,7 +51,14 @@
     "get_directions": "Get Directions",
     "choose_map": "Choose Map",
     "cancel": "Cancel",
-    "unavailable": "Service temporarily unavailable"
+    "unavailable": "Service temporarily unavailable",
+    "report_issue": "Report Issue",
+    "report_desc": "What is wrong with this station?",
+    "send_report": "Submit Report",
+    "report_success": "Thank you!",
+    "report_success_desc": "Your report has been submitted successfully.",
+    "report_fail": "Failed to submit report.",
+    "opening_hours": "Opening Hours"
   },
   "favorites": {
     "title": "My Favorites",

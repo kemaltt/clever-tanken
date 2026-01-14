@@ -4,10 +4,15 @@ import { useFocusEffect, router } from 'expo-router';
 import { Heart, MapPin, Navigation, Info, ChevronRight } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { Favorites, FavoriteStation } from '@/utils/Favorites';
+import axios from 'axios';
+import Config from '@/constants/Config';
+import { RefreshControl } from 'react-native';
 
 export default function FavoritesScreen() {
   const { t } = useTranslation();
   const [favorites, setFavorites] = useState<FavoriteStation[]>([]);
+
+  const [refreshing, setRefreshing] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -18,7 +23,59 @@ export default function FavoritesScreen() {
   const loadFavorites = async () => {
     const favs = await Favorites.getAll();
     setFavorites(favs);
+    if (favs.length > 0) {
+      updatePrices(favs);
+    }
   };
+
+  const updatePrices = async (currentFavs: FavoriteStation[]) => {
+    try {
+      const ids = currentFavs.map(f => f.id).join(',');
+      const response = await axios.get(`${Config.API_BASE_URL}/prices`, {
+        params: { ids }
+      });
+      
+      if (response.data.ok && response.data.prices) {
+        // Merge new prices into favorites list for display (but maybe not save to storage to avoid overwrite race? 
+        // actually better to just update state for display)
+        const updatedFavs = currentFavs.map(station => {
+          const priceData = response.data.prices[station.id];
+          if (priceData) {
+            // TankerKoenig returns e5, e10, diesel. We need to pick one based on user pref? 
+            // Or just update the one that was saved? 
+            // The favorite saves 'price' which usually corresponds to the selected fuel type.
+            // But we don't know WHICH fuel type the user favored unless we save it. 
+            // For now, let's assume Diesel if not specified or just update all if we can.
+            // Wait, FavoriteStation has 'price' field. Let's try to infer or just show diesel for now?
+            // Actually, best to check if station.brand implies fuel? No.
+            // Let's just default to updating 'price' with diesel for now, or maybe we should save fuel type in favs.
+            // If we can't determine, proper way is to show detailed price or keep old one.
+            // Let's try: if existing price matches e5/e10/diesel, update that specific one.
+            // Simplification: Update 'price' with Diesel as fallback, or E5 if Diesel is closed/missing?
+            // Let's use Diesel for consistency with list view default.
+            
+            // BETTER: favorites should probably store the preferred fuel type. 
+            // Since we don't have it, let's show status (Open/Closed) which is valuable.
+            return {
+              ...station,
+              isOpen: priceData.status === 'open',
+              price: priceData.diesel // Update with live diesel price for now
+            };
+          }
+          return station;
+        });
+        setFavorites(updatedFavs);
+      }
+    } catch (error) {
+      console.error('Failed to update prices:', error);
+    }
+  };
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await loadFavorites();
+    setRefreshing(false);
+  }, []);
 
   const renderFavorite = ({ item }: { item: FavoriteStation }) => (
     <TouchableOpacity 
@@ -83,7 +140,9 @@ export default function FavoritesScreen() {
           keyExtractor={(item) => item.id}
           renderItem={renderFavorite}
           contentContainerStyle={{ paddingTop: 16, paddingBottom: 100 }}
-          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#3b82f6" />
+          }
         />
       )}
     </View>

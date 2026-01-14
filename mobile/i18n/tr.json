@@ -51,7 +51,14 @@
     "get_directions": "Yol Tarifi Al",
     "choose_map": "Harita Seçin",
     "cancel": "İptal",
-    "unavailable": "Servis geçici olarak kullanılamıyor"
+    "unavailable": "Servis geçici olarak kullanılamıyor",
+    "report_issue": "Sorun Bildir",
+    "report_desc": "Bu istasyonla ilgili sorun nedir?",
+    "send_report": "Bildirimi Gönder",
+    "report_success": "Teşekkürler!",
+    "report_success_desc": "Bildiriminiz başarıyla iletildi.",
+    "report_fail": "Bildirim gönderilemedi.",
+    "opening_hours": "Açılış Saatleri"
   },
   "favorites": {
     "title": "Favorilerim",
