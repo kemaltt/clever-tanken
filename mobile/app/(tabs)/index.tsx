@@ -288,7 +288,7 @@ export default function HomeScreen() {
               nearbyStations.map((station) => (
                 <TouchableOpacity 
                   key={station.id}
-                  className="flex-row items-center bg-white/5 rounded-2xl p-4 border border-white/5 mb-3"
+                  className="flex-row items-center bg-black/50 rounded-2xl p-4 border border-white/10 mb-3"
                   onPress={() => router.push(`/station/${station.id}`)}
                 >
                   <View className="bg-blue-500/20 p-3 rounded-xl">
@@ -296,27 +296,27 @@ export default function HomeScreen() {
                   </View>
                   <View className="flex-1 ml-4">
                     <Text className="text-white font-semibold text-base" numberOfLines={1}>{station.name}</Text>
-                    <Text className="text-gray-500 text-sm">{station.dist.toFixed(1)} km • {station.brand || t('common.independent')}</Text>
+                    <Text className="text-gray-300 text-sm">{station.dist.toFixed(1)} km • {station.brand || t('common.independent')}</Text>
                   </View>
                   <View className="items-end">
                     <Text className="text-blue-400 font-bold text-lg">{station.price.toFixed(2)}€</Text>
                   </View>
-                  <ChevronRight size={18} color="#4b5563" className="ml-2" />
+                  <ChevronRight size={18} color="#9ca3af" className="ml-2" />
                 </TouchableOpacity>
               ))
             ) : (
               <TouchableOpacity 
                 onPress={handleCurrentLocation}
-                className="flex-row items-center bg-white/5 rounded-2xl p-4 border border-white/5 mb-4"
+                className="flex-row items-center bg-black/50 rounded-2xl p-4 border border-white/10 mb-4"
               >
                 <View className="bg-blue-500/20 p-3 rounded-xl">
                   <Navigation size={22} color="#3b82f6" />
                 </View>
                 <View className="flex-1 ml-4">
                   <Text className="text-white font-semibold text-base">{t('home.current_location')}</Text>
-                  <Text className="text-gray-500 text-sm">{t('home.show_closest')}</Text>
+                  <Text className="text-gray-300 text-sm">{t('home.show_closest')}</Text>
                 </View>
-                <ChevronRight size={20} color="#4b5563" />
+                <ChevronRight size={20} color="#9ca3af" />
               </TouchableOpacity>
             )}
           </View>
